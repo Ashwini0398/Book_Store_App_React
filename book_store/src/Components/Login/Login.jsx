@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import './Login.scss';import Button from '@material-ui/core/Button';
+import './Login.scss';
+import Button from '@material-ui/core/Button';
 
 
 export default class Login extends Component {
 
-    constructor(props) {
-        super(props);
+    // constructor(props) {
+    //     super(props);
        
-    }
+    // }
 
     render() {
         let styles;

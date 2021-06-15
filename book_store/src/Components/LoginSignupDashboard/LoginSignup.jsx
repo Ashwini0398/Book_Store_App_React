@@ -1,8 +1,30 @@
 import React, { Component } from 'react';
 import Login from '../Login/Login';
+import Signup from '../SignUp/Signup';
+import Button from '@material-ui/core/Button';
 import './LoginSignup.scss'
 
 class LoginSignup extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: true
+        }
+    }
+
+    toSignUp=()=>{
+        this.setState({
+            open:false
+        })
+
+    }
+
+    toLogin=()=>{
+        this.setState({
+            open:true
+        })
+    }
+
     render() {
         return (
             <div className="reg-frame">
@@ -12,16 +34,28 @@ class LoginSignup extends Component {
                         <span style={{ marginTop: '16px' }}>Online Book Shopping</span>
                     </div>
                 </div>
-                <div className="main-frame">
-                    <div className="main-title">
-                        <span>LOGIN</span>
-                        <span>SIGN UP</span>
-                    </div><div className="Login-box">
-                             <Login />
-                    </div>
 
-                    
-                </div>
+                {this.state.open ?
+                    <div className="main-frame">
+                        <div className="main-title">
+                        <Button className="btn"> Login </Button>
+                        <Button className="btn" onClick={this.toSignUp}>  Sign Up </Button>
+                        </div>
+                        <div className="Login-box">
+                            <Login />
+                        </div>
+                    </div>
+                    :
+                    <div className="main-frame">
+                        <div className="main-title">
+                        <Button className="btn" onClick={this.toLogin} >  Login </Button>
+                        <Button className="btn">  Sign Up </Button>
+                        </div>
+                        <div className="Signup-box">
+                            <Signup />
+                        </div>
+                    </div>
+                }
             </div>
         );
     }

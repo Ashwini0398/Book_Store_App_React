@@ -1,3 +1,5 @@
+
+
 .login-form{
     justify-content: center;
     height: 333px;
@@ -16,4 +18,14 @@
     display: flex;
     justify-content: space-evenly;
     margin-top: 18px;
+}
+.reg-form{
+    height: 350px;
+}
+
+.reg-input{
+    display: flex;
+    flex-direction: column;
+    height: 292px;
+    justify-content: space-evenly;
 }
