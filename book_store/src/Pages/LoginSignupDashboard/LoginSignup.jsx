@@ -33,46 +33,20 @@ class LoginSignup extends Component {
 
                 <div className="main-frame">
                         <div className="main-title">
-                        <Link style={{textDecoration:"none",color:"black"}} to={`/Login`} >
+                        <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/Login`} >
                         <span className="btn text ">LOGIN </span>
                         </Link>
-                        <Link style={{textDecoration:"none",color:"black"}} to={`/SignUp`} >
+                        <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/SignUp`} >
                         <span className="btn text2">SIGNUP </span>
                         </Link>
                         </div>
                         <div className="Login-box">
                         <Switch>
-                            <Route exact path="/Login" component={Login} />
-                            <Route exact path="/SignUp" component={Signup} />
+                            <Route exact path="/LoginSignUp/Login" component={Login} />
+                            <Route exact path="/LoginSignUp/SignUp" component={Signup} />
                         </Switch>
                         </div>
                     </div>
-
-                {/* <Switch>
-                    <Route exact path="/LoginSignUp/Login" component={Login} />
-                    <Route exact path="/LoginSignUp/SignUp" component={Signup} />
-                </Switch> */}
-                {/* {this.state.open ?
-                    <div className="main-frame">
-                        <div className="main-title">
-                        <span className="btn text ">LOGIN </span>
-                        <span className="btn text2" onClick={this.toSignUp}>  SIGNUP </span>
-                        </div>
-                        <div className="Login-box">
-                            <Login />
-                        </div>
-                    </div>
-                    :
-                    <div className="main-frame">
-                        <div className="main-title">
-                        <span className="btn text2" onClick={this.toLogin} >  LOGIN</span>
-                        <span className="btn text">  SIGNUP</span>
-                        </div>
-                        <div className="Signup-box">
-                            <Signup />
-                        </div>
-                    </div>
-                } */}
             </div>
         );
     }

@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import './Login.scss';
 import Button from '@material-ui/core/Button';
 import {Redirect} from "react-router-dom";
-import user_services from '../../Servies/user_services';
+import user_services from '../../Services/user_services';
 
 let UserNameRegex = /^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$/;
 let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
@@ -72,7 +72,9 @@ export default class Login extends Component {
                     localStorage.setItem('email', data.data.email);
                     localStorage.setItem('first', data.data.firstName);
                     localStorage.setItem('last', data.data.lastName);
-                    this.redirectToDashboard();
+                    this.setState({
+                        redirect:"/Home",
+                    })
                 })
                 .catch(error=>{
                     console.log('Error',error);
@@ -132,7 +134,7 @@ export default class Login extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button1" variant="contained"  href="#contained-buttons" onClick={this.Login}>
+                            <Button className="button1" variant="contained"  onClick={this.Login}>
                                 Login
                             </Button>
                         </div>

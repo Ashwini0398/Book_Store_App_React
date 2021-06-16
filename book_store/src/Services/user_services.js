@@ -1,4 +1,4 @@
-import axios_service from '../Servies/axios_services';
+import axios_service from './axios_services';
 import {baseURL} from './environment'
 
 class UserService{

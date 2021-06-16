@@ -6,16 +6,17 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import {ProtectedRoute} from '../src/Services/auth/protectedRoutes';
+import Home from './Components/Home/Home';
 function App() {
   return (
-    <>
-      <BrowserRouter>
-      <LoginDashboard/>
-        {/* < Switch> */}
-          {/* <Route exact path="/LoginSignUp" component={LoginDashboard} /> */}
-        {/* </Switch> */}
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      < Switch>
+        <Route path="/LoginSignUp" component={LoginDashboard} />
+        <ProtectedRoute path="/Home" component={Home} />
+      </Switch>
+    </BrowserRouter>
+
 
   );
 }

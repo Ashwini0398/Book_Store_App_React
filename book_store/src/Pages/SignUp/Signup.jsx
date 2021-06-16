@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import '../../Pages/Login/Login.scss';
 import {Redirect} from "react-router-dom";
-import user_services from '../../Servies/user_services';
+import user_services from '../../Services/user_services';
 
 let NameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
 let UserNameRegex = RegExp("^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$");
