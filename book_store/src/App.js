@@ -1,9 +1,20 @@
 import './App.css';
-import LoginSignup from './Components/LoginSignupDashboard/LoginSignup'
+import LoginDashboard from './Pages/LoginSignupDashboard/LoginSignup'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 function App() {
   return (
     <>
-    <LoginSignup/>
+      <BrowserRouter>
+      <LoginDashboard/>
+        {/* < Switch> */}
+          {/* <Route exact path="/LoginSignUp" component={LoginDashboard} /> */}
+        {/* </Switch> */}
+      </BrowserRouter>
     </>
 
   );

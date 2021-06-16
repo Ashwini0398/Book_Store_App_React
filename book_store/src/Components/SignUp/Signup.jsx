@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import '../Login/Login.scss';
+import {Redirect} from "react-router-dom";
 
 let NameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
 let UserNameRegex = RegExp("^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$");
@@ -20,6 +21,7 @@ class Signup extends Component {
             uNameError: false,
             passwordError: false,
             mobilenoError:false,
+            redirect:'',
             flag:0,
         }
     }
@@ -76,6 +78,9 @@ class Signup extends Component {
 
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to ={this.state.redirect}/>
+        }
         let styles = {
             helperText: {
 
@@ -140,7 +145,7 @@ class Signup extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button" variant="contained" color="primary" href="#contained-buttons" onClick={this.signup}>
+                            <Button className="button1" variant="contained"  href="#contained-buttons" onClick={this.Login}>
                                 Signup
                             </Button>
                         </div>

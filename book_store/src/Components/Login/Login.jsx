@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './Login.scss';
 import Button from '@material-ui/core/Button';
+import {Redirect} from "react-router-dom";
 
 let UserNameRegex = /^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$/;
 let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
@@ -14,6 +15,7 @@ export default class Login extends Component {
             password: '',
             uNameError: false,
             passwordError: false,
+            redirect:'',
             flag:0
         }
        
@@ -56,6 +58,9 @@ export default class Login extends Component {
     }
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to ={this.state.redirect}/>
+        }
         let styles = {
             helperText: {
 
@@ -100,17 +105,17 @@ export default class Login extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button" variant="contained" color="primary" href="#contained-buttons" onClick={this.Login}>
+                            <Button className="button1" variant="contained"  href="#contained-buttons" onClick={this.Login}>
                                 Login
                             </Button>
                         </div>
 
                         <span style={{marginTop:'14px'}}>---------- OR ----------</span>
                         <div className="div-buttons">
-                            <Button className="button" variant="contained" color="primary" href="#contained-buttons" >
+                            <Button className="button" variant="contained" color="primary">
                                 Facebook
                             </Button>
-                            <Button className="button" variant="contained" color="red" href="#contained-buttons">
+                            <Button className="button" variant="contained" color="red">
                                 Google
                             </Button>
 
