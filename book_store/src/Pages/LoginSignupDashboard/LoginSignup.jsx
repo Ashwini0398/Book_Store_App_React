@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Login from '../../Components/Login/Login';
-import Signup from '../../Components/SignUp/Signup';
+import Login from '../Login/Login';
+import Signup from '../SignUp/Signup';
 import Button from '@material-ui/core/Button';
 import {
     BrowserRouter,

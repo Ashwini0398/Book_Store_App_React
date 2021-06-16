@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import './Login.scss';
 import Button from '@material-ui/core/Button';
 import {Redirect} from "react-router-dom";
+import user_services from '../../Servies/user_services';
 
 let UserNameRegex = /^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$/;
 let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
@@ -55,6 +56,32 @@ export default class Login extends Component {
             uNameError : !this.validationTest(UserNameRegex, this.state.uName) ,
             passwordError : !this.validationTest(passwordRegex, this.state.password) 
         });
+       
+        if (this.state.flag === 1 
+            && !this.state.uNameError 
+            && !this.state.passwordError ) {
+            
+                let userData = {
+                    email: this.state.uName,
+                    password: this.state.password
+                };
+
+                user_services.login(userData).then((data) =>{
+                    console.log('data after register',data);
+                    localStorage.setItem('token', data.data.id);
+                    localStorage.setItem('email', data.data.email);
+                    localStorage.setItem('first', data.data.firstName);
+                    localStorage.setItem('last', data.data.lastName);
+                    this.redirectToDashboard();
+                })
+                .catch(error=>{
+                    console.log('Error',error);
+                });
+        }
+
+        
+
+
     }
 
     render() {

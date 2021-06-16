@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import '../Login/Login.scss';
+import '../../Pages/Login/Login.scss';
 import {Redirect} from "react-router-dom";
+import user_services from '../../Servies/user_services';
 
 let NameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
 let UserNameRegex = RegExp("^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$");
 let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
-let mobilenoRegex = /^[+]{1}[0][6-9]{1}[0-9]{9}$/;
+let mobilenoRegex = /^[6-9]{1}[0-9]{9}$/;
 
 class Signup extends Component {
     constructor(props) {
@@ -74,7 +75,30 @@ class Signup extends Component {
             passwordError : !this.validationTest(passwordRegex, this.state.password) ,
             mobilenoError:!this.validationTest(mobilenoRegex, this.state.mobileno) ,
         });
+        if (this.state.flag === 1 
+            && !this.state.fNameError 
+            && !this.state.uNameError 
+            && !this.state.passwordError 
+            && !this.state.mobilenoError) {
+            {
+                console.log("validation successfull");
+                let userData = {
+                    fullName: this.state.fName,
+                    email: this.state.uName,
+                    password: this.state.password,
+                    phone: this.state.mobileno,
+                    // service: 'advance',
+                };
+
+                user_services.register(userData).then((data) =>{
+                    console.log('data after register',data);
+                })
+                .catch(error=>{
+                    console.log('Error',error);
+                });
+            }
     }
+}
 
 
     render() {
@@ -145,7 +169,7 @@ class Signup extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button1" variant="contained"  href="#contained-buttons" onClick={this.Login}>
+                            <Button className="button1" variant="contained"  onClick={this.signup}>
                                 Signup
                             </Button>
                         </div>
