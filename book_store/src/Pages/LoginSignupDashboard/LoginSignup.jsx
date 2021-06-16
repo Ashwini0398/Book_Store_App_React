@@ -20,17 +20,6 @@ class LoginSignup extends Component {
         }
     }
 
-    toSignUp=()=>{
-        this.setState({open:false})
-        this.setState({ redirect: "/Login" });
-
-    }
-
-    toLogin=()=>{
-        this.setState({open:true })
-        this.setState({ redirect: "/Signup" });
-    }
-
     render() {
         
         return (

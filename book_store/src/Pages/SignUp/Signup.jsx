@@ -92,6 +92,9 @@ class Signup extends Component {
 
                 user_services.register(userData).then((data) =>{
                     console.log('data after register',data);
+                    this.setState({
+                        redirect:"/Login",
+                    })
                 })
                 .catch(error=>{
                     console.log('Error',error);
