@@ -4,6 +4,13 @@ import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
 import { useEffect } from 'react';
 import './Dashboard.scss'
+import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
+import Cart from "../../Components/Cart/Cart";
+import {
+    Switch,
+    Link
+  } from "react-router-dom";
+  
 
 export default function DashboardPage(){
     const [books, setBooks] = React.useState([]);
@@ -12,7 +19,7 @@ export default function DashboardPage(){
       },[]);
     
     const booksDetails=(book)=>{
-        return( <Card value={book} get = {getAllBooks}/>)
+        return(<Card value={book} get = {getAllBooks}/>)
     }
     
     const getAllBooks=()=>{
@@ -28,7 +35,7 @@ export default function DashboardPage(){
         <div>
             <Header/>
                 <div className="disp-books">
-                {books.map(booksDetails)}
+                    {books.map(booksDetails)}
                 </div>
         </div>
     );

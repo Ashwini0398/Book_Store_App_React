@@ -6,11 +6,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Image from '../../Assets/Image7.jpg';
+import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
+import Cart from "../../Components/Cart/Cart";
 import { width } from '@material-ui/system';
 import { Redirect } from 'react-router';
 import {
   Switch,
-  Link
+  Link,
+  Route
 } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -71,26 +74,40 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  const from = { pathname: '/Cart' };
+  const [redirect, setRedirect] = React.useState(null);
 
 const redirectCart=()=>{
   debugger;
-  <Redirect to='/Cart' books= {props.value}/>
+  // <Redirect from="/Dashboard" to={from} books= {val}/>
+  setRedirect("/Cart");
+  // return <ProtectedRoute exact path={"/Cart"}>
+  //   <Cart books= {val}/>
+  // </ProtectedRoute>
 }
-
+if (redirect) {
+   return <Redirect to={{
+    pathname: redirect,
+    state: {books : props.value } }}/>
+  // return <ProtectedRoute exact path={"/Cart"}>
+  //   <Cart books= {props.value}/>
+  // </ProtectedRoute>
+}
+else{
   return (
-    <Link to="/Cart" style={{textDecoration:'none'}}>
-      <Card className={classes.root}>
-        <CardContent className={classes.content}>
-          <img className={classes.image} src={Image} alt="" />
-        </CardContent>
-        <CardActions className={classes.cardTxt}>
-          <div className={classes.bookTitle}>{props.value.bookName}</div>
-          <div className={classes.bookAuthor}>by {props.value.author}</div>
-          <div className={classes.bookRating}>4.5 &#9733;</div>
-          <div>{props.value.price}</div>
-        </CardActions>
-      </Card>
-    </Link>
+    <ProtectedRoute exact path={"/Dashboard"}>
+        <Card className={classes.root} onClick={()=>redirectCart()}>
+          <CardContent className={classes.content}>
+            <img className={classes.image} src={Image} alt="" />
+          </CardContent>
+          <CardActions className={classes.cardTxt}>
+            <div className={classes.bookTitle}>{props.value.bookName}</div>
+            <div className={classes.bookAuthor}>by {props.value.author}</div>
+            <div className={classes.bookRating}>4.5 &#9733;</div>
+            <div>{props.value.price}</div>
+          </CardActions>
+        </Card>
+      </ProtectedRoute>
   );
+}
 }
