@@ -7,13 +7,17 @@ import {
   Link
 } from "react-router-dom";
 import {ProtectedRoute} from '../src/Services/auth/protectedRoutes';
-import Home from './Components/Home/Home';
+// import Home from './Components/Home/Home';
+import Header from './Components/Home/Header';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import Cart from './Components/Cart/Cart';
 function App() {
   return (
     <BrowserRouter>
       < Switch>
         <Route path="/LoginSignUp" component={LoginDashboard} />
-        <ProtectedRoute path="/Home" component={Home} />
+        <ProtectedRoute path="/Dashboard" component={Dashboard} />
+        <ProtectedRoute path="/Cart" component={Cart} />
       </Switch>
     </BrowserRouter>
 

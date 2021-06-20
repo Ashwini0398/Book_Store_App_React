@@ -68,12 +68,10 @@ export default class Login extends Component {
 
                 user_services.login(userData).then((data) =>{
                     console.log('data after register',data);
-                    localStorage.setItem('token', data.data.id);
-                    localStorage.setItem('email', data.data.email);
-                    localStorage.setItem('first', data.data.firstName);
-                    localStorage.setItem('last', data.data.lastName);
+                    localStorage.setItem('token', data.data.result.accessToken);
+                    
                     this.setState({
-                        redirect:"/Home",
+                        redirect:"/Dashboard",
                     })
                 })
                 .catch(error=>{

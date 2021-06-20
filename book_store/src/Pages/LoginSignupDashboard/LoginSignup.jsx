@@ -9,6 +9,7 @@ import {
     Link
   } from "react-router-dom";
 import './LoginSignup.scss';
+import loginImage from "../../Assets/cart.png";
 import {Redirect} from "react-router-dom"
 
 class LoginSignup extends Component {
@@ -26,7 +27,7 @@ class LoginSignup extends Component {
             <div className="reg-frame">
                 <div className="reg-content">
                     <div className="reg-title">
-                        <img className="img-disp" src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A7b0eeb81-a918-4f41-9bc2-f508474e79ce&params=version%3A0&token=1623902918_da39a3ee_0bbacdeff797d6586d7980ddeee59d7d3794076b&api_key=CometServer1" alt="hello"></img>
+                        <img className="img-disp" src={loginImage} alt="hii" />
                         <span style={{ marginTop: '16px' }}>Online Book Shopping</span>
                     </div>
                 </div>
@@ -34,7 +35,7 @@ class LoginSignup extends Component {
                 <div className="main-frame">
                         <div className="main-title">
                         <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/Login`} >
-                        <span className="btn text ">LOGIN </span>
+                        <span className="btn text">LOGIN </span>
                         </Link>
                         <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/SignUp`} >
                         <span className="btn text2">SIGNUP </span>

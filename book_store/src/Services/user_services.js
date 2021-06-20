@@ -16,5 +16,11 @@ class UserService{
        let url = baseURL+'user/registration';
         return this.axios_service.post(url,data);
     }
+
+    getAllBooks(){
+        let url = baseURL+'user/get/book';
+        return this.axios_service.get(url);
+    }
+
 }
 export default new UserService();
