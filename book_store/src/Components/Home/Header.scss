@@ -34,3 +34,14 @@
     @include icon(flex,null,space-around)
 
 }
+@media screen and (max-width: 750px) {
+    .side-header {
+        margin-left: 5px; 
+    }
+}
+@media screen and (max-width: 600px) {
+    .header-title {
+        margin-left: 3px;
+        margin-right: 12px;
+    }
+}

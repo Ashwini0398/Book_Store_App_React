@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Image from '../../Assets/Image.png';
 import Button from '@material-ui/core/Button';
+import user_services from "../../Services/user_services";
 
 const useStyles = makeStyles({
     rootCart: {
@@ -74,6 +75,17 @@ const useStyles = makeStyles({
 
 export default function Cart(props) {
     const classes = useStyles();
+
+    const addToCart=()=>{
+        debugger;
+        user_services.addToCart(props.location.state.books._id).then((data) =>{
+            console.log(data);
+            
+        }).catch(error=>{
+          console.log("error",error);
+        })
+    }
+
     return (
         <>
             <div>
@@ -92,7 +104,7 @@ export default function Cart(props) {
                             </CardContent>
                         </Card>
                         <div className="button">
-                            <Button variant="contained" color="secondary" className="btn1">
+                            <Button variant="contained" color="secondary" className="btn1" onClick={addToCart}>
                                 ADD TO BAG
                             </Button>
                             <Button variant="contained" color="secondary" className="btn2">

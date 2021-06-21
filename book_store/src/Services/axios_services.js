@@ -13,6 +13,16 @@ axios_service.prototype.post =  function(url,data){
     });
 }
 
+axios_service.prototype.postCart =  function(url){
+  debugger;
+  return axios.post(url,{
+    headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.getItem('token')
+    }
+  });
+}
+
 axios_service.prototype.get =  function(url){
   return axios.get(url,{
       headers: {

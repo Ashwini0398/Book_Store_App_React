@@ -17,6 +17,11 @@ class UserService{
         return this.axios_service.post(url,data);
     }
 
+    addToCart(data){
+        let url = baseURL+`user/add_cart_item/${data}`;
+        return this.axios_service.postCart(url);
+    }
+
     getAllBooks(){
         let url = baseURL+'user/get/book';
         return this.axios_service.get(url);
