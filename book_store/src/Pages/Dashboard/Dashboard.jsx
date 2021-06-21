@@ -5,7 +5,6 @@ import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
 import { useEffect } from 'react';
 import './Dashboard.scss'
-import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
 import Cart from "../../Components/Cart/Cart";
 import {
     Switch,

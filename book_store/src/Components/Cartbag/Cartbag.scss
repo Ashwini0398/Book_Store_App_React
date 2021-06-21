@@ -1,0 +1,103 @@
+@mixin flex ($disp,$justify,$direction,$width,$height){
+    display: $disp;
+    flex-direction: $direction;
+    justify-content: $justify;
+    height:$height;
+    width: $width;
+}
+
+$border: 1px solid #d9cccc;
+.CartBag-frame{
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title{
+    width: 59%;
+}
+.cartBag-content{
+    width: 850px;
+    height: 300px;
+    border: 1px solid #d9cccc;
+    padding: 20px;
+    margin-top: 20px;
+}
+.main-cart{
+    display: flex;
+}
+.bag-text{
+    @include flex(flex,space-evenly ,column ,300px ,161px );
+   
+}
+.img-book{
+    width: 94px;
+    margin: 20px 20px 10px 5px;
+}
+.cart-title
+{ 
+    font-Weight: 600;
+    font-size: 20px;
+}
+.cart-bookAuthor{
+    font-size: 15px;
+    height: 12px;
+    color: #a49595;
+    font-weight: 600;
+}
+.price{
+    font-weight: bold;
+}
+.count-content{
+    display: flex;
+    .minus{
+        @include flex(flex,center ,null ,24px ,23px );
+        border: $border;
+        align-items: center;
+        border-radius: 15px;
+        font-size: 23px;
+        font-weight: bold;
+    }
+    .count{
+        width: 54px;
+        border: $border;
+        margin: 0px 7px 0px 7px;
+        display: flex;
+        justify-content: center;
+
+    }
+    .plus{
+        @include flex(flex,center ,null ,24px ,23px );
+        border: $border;
+        align-items: center;
+        border-radius: 15px;
+        font-size: 23px;
+        font-weight: bold;
+    }
+    .remove{
+        margin-left: 39px;
+    }
+}
+.btn-content{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 37px;
+}
+.btn-place{
+    background-color: #3371B5 !important;
+    color:white !important;
+}
+.address-frame{
+    @include flex(flex,center ,column ,867px ,74px );
+    border: $border;
+    margin-top: 12px;
+    padding-left: 23px;
+}
+.order-frame{
+    @include flex(flex,center ,column ,867px ,74px );
+    border: $border;
+    margin-top: 12px;
+    padding-left: 23px;
+
+}

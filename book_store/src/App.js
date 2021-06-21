@@ -1,5 +1,6 @@
 import './App.css';
 import LoginDashboard from './Pages/LoginSignupDashboard/LoginSignup'
+import Cartbag from '../src/Components/Cartbag/Cartbag';
 import {
   BrowserRouter,
   Switch,
@@ -18,6 +19,7 @@ function App() {
         <Route path="/LoginSignUp" component={LoginDashboard} />
         <ProtectedRoute path="/Dashboard" component={Dashboard} />
         <ProtectedRoute path="/Cart" component={Cart} />
+        <ProtectedRoute path="/CartBag" component={Cartbag} />
       </Switch>
     </BrowserRouter>
 

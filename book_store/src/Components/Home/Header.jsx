@@ -9,6 +9,7 @@ import './Header.scss';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import book from "../../Assets/book.svg";
+import {Redirect} from "react-router-dom"
 
 
 
@@ -57,11 +58,24 @@ search: {
 class Home extends Component {
     constructor(props) {
         super(props);
+        this.state={
+            redirect: '',
+
+        }
 
     }
 
+     redirectCartBag = () => {
+         debugger;
+        this.setState({redirect:"/CartBag"});
+       
+      }
 
     render() {
+
+        if(this.state.redirect){
+            return <Redirect to ={this.state.redirect}/>
+        }
         const { classes, theme  } = this.props;
         return (
             <>
@@ -93,7 +107,7 @@ class Home extends Component {
                                 <PersonOutlineIcon/>
                                 <span>Profile</span>
                             </div>
-                            <div className="cart">
+                            <div className="cart" onClick={() => this.redirectCartBag} >
                                 <ShoppingCartIcon/>
                                 <span>Cart</span>
                             </div>

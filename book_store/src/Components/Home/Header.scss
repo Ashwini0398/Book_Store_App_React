@@ -25,7 +25,8 @@
     @include icon(flex,column,null)
 }
 .cart{
-    @include icon(flex,column,null)
+    @include icon(flex,column,null);
+    cursor: pointer;
 }
 .side-header{
     width: 200px;

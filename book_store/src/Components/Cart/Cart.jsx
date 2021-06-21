@@ -86,34 +86,34 @@ export default function Cart(props) {
                 </div>
                 <div className="cart-book-dtl">
                     <div className="book-disp">
-                    <Card className={classes.rootCart}>
-                        <CardContent className={classes.contents}>
-                            <img className={classes.imageCart} src={Image} alt="" />
-                        </CardContent>
-                    </Card>
-                    <div className="button">
-                        <Button variant="contained" color="secondary" className="btn1">
-                            ADD TO BAG
-                        </Button>
-                        <Button variant="contained" color="secondary" className="btn2">
-                            &#10084; WISHLIST
-                        </Button>
+                        <Card className={classes.rootCart}>
+                            <CardContent className={classes.contents}>
+                                <img className={classes.imageCart} src={Image} alt="" />
+                            </CardContent>
+                        </Card>
+                        <div className="button">
+                            <Button variant="contained" color="secondary" className="btn1">
+                                ADD TO BAG
+                            </Button>
+                            <Button variant="contained" color="secondary" className="btn2">
+                                &#10084; WISHLIST
+                            </Button>
+                        </div>
                     </div>
-                </div>
                     <div className="descp-disp">
-                    <CardActions className={classes.cartTxt}>
-                        <div className={classes.bookTitleCart}>{props.location.state.books.bookName}</div>
-                        <div className={classes.bookAuthorCart}>{props.location.state.books.author}</div>
-                        <div className={classes.bookRatingCart}>4.5 &#9733;</div>
-                        <div className={classes.price}>Rs.{props.location.state.books.price}</div>
-                    </CardActions>
-                    <div>
-                    <span class="dot"> <div>Book Details</div></span>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                        <CardActions className={classes.cartTxt}>
+                            <div className={classes.bookTitleCart}>{props.location.state.books.bookName}</div>
+                            <div className={classes.bookAuthorCart}>{props.location.state.books.author}</div>
+                            <div className={classes.bookRatingCart}>4.5 &#9733;</div>
+                            <div className={classes.price}>Rs.{props.location.state.books.price}</div>
+                        </CardActions>
+                        <div>
+                            <span class="dot"> <div>Book Details</div></span>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. </p>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
         </>

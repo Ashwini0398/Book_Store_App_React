@@ -1,23 +1,26 @@
-.cart-frame{
-    margin-top: 108px;
+@mixin items($jstCont,$width,$aliItem) {
     display: flex;
-    height: 464px;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: $jstCont;
+    width: $width;
+    align-items: $aliItem;
+    
+}
+.cart-frame{
+    @include items(center,null,flex-start );
+    margin-top: 108px;
+    height: 464px; 
 }
 .book-disp{
     width: 50%;
 }
 .button{
-    display: flex;
-    justify-content: space-evenly;
-    width: 323px;
+    @include items(space-evenly,323px,null );
+    margin-top: 14px;
 }
 .img-crt-align{
-    display: flex;
+    @include items(space-between,null,null );
     flex-direction: column;
     height: 120px;
-    justify-content: space-between;
 }
 .img-crt{
     width: 40px;
@@ -32,8 +35,5 @@
     display: inline-block;
   }
 .cart-book-dtl{
-    display: flex;
-    width: 800px;
-    justify-content: center;
-    align-items: center;
+    @include items(center,800px,center);
 }
