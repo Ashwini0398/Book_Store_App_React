@@ -8,6 +8,9 @@ import InputBase from '@material-ui/core/InputBase';
 import './Header.scss';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import book from "../../Assets/book.svg";
+
+
 
 const styles = theme => ({
 search: {
@@ -66,7 +69,7 @@ class Home extends Component {
                     <AppBar className="app-header" position="fixed">
                         <Toolbar>
                             <div className="header-title">
-                                <img src="https://public-v2links.adobecc.com/d096df37-ca37-4026-553f-8cfa6bec09ec/component?params=component_id%3A34a6421f-a569-47b8-bc37-078211517464&params=version%3A0&token=1623902918_da39a3ee_0bbacdeff797d6586d7980ddeee59d7d3794076b&api_key=CometServer1 " alt="book"></img>
+                            <img className="img" src={book} alt="hii" />
                                 <div className="text">Bookstore</div>
                             </div>
                             <div className="search-bar">

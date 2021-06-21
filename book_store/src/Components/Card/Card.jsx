@@ -5,7 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Image from '../../Assets/Image7.jpg';
+import Image from '../../Assets/Image.png';
 import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
 import Cart from "../../Components/Cart/Cart";
 import { width } from '@material-ui/system';
@@ -104,7 +104,7 @@ else{
             <div className={classes.bookTitle}>{props.value.bookName}</div>
             <div className={classes.bookAuthor}>by {props.value.author}</div>
             <div className={classes.bookRating}>4.5 &#9733;</div>
-            <div>{props.value.price}</div>
+            <div>Rs.{props.value.price}</div>
           </CardActions>
         </Card>
       </ProtectedRoute>

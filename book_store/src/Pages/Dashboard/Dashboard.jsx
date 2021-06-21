@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Home/Header';
+import Footer from '../../Components/Footer/Footer';
 import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
 import { useEffect } from 'react';
@@ -37,6 +38,7 @@ export default function DashboardPage(){
                 <div className="disp-books">
                     {books.map(booksDetails)}
                 </div>
+            <Footer/>
         </div>
     );
 }

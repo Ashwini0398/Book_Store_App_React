@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Image from '../../Assets/Image7.jpg';
+import Image from '../../Assets/Image.png';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
@@ -105,7 +105,7 @@ export default function Cart(props) {
                         <div className={classes.bookTitleCart}>{props.location.state.books.bookName}</div>
                         <div className={classes.bookAuthorCart}>{props.location.state.books.author}</div>
                         <div className={classes.bookRatingCart}>4.5 &#9733;</div>
-                        <div className={classes.price}>{props.location.state.books.price}</div>
+                        <div className={classes.price}>Rs.{props.location.state.books.price}</div>
                     </CardActions>
                     <div>
                     <span class="dot"> <div>Book Details</div></span>
