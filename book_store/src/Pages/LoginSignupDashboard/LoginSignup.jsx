@@ -21,6 +21,10 @@ class LoginSignup extends Component {
         }
     }
 
+    componentDidMount(){
+        console.log("loginsign up")
+    }
+
     render() {
         
         return (
@@ -34,17 +38,17 @@ class LoginSignup extends Component {
 
                 <div className="main-frame">
                         <div className="main-title">
-                        <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/Login`} >
-                        <span className="btn text">LOGIN </span>
+                        <Link style={{textDecoration:"none",color:"black"}} to={`/Login`} >
+                        <span className="btn text1">LOGIN </span>
                         </Link>
-                        <Link style={{textDecoration:"none",color:"black"}} to={`/LoginSignUp/SignUp`} >
+                        <Link style={{textDecoration:"none",color:"black"}} to={`/SignUp`} >
                         <span className="btn text2">SIGNUP </span>
                         </Link>
                         </div>
                         <div className="Login-box">
                         <Switch>
-                            <Route exact path="/LoginSignUp/Login" component={Login} />
-                            <Route exact path="/LoginSignUp/SignUp" component={Signup} />
+                            <Route exact path="/Login" component={Login} />
+                            <Route exact  path="/SignUp" component={Signup} />
                         </Switch>
                         </div>
                     </div>

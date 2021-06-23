@@ -25,7 +25,7 @@ $border: 1px solid #d9cccc;
 }
 .cartBag-content {
     width: 78%;
-    height: 300px;
+    min-height: 472px;
     border: $border;
     padding: 20px;
     margin-top: 20px;
@@ -52,6 +52,9 @@ $border: 1px solid #d9cccc;
 }
 .price {
     font-weight: bold;
+}
+.text-content{
+    width: 180px;
 }
 .count-content {
     display: flex;
@@ -114,7 +117,6 @@ $border: 1px solid #d9cccc;
 }
 .dtl-btn {
     color: #a03037 !important;
-    border: 1px solid #a03037 !important;
 }
 .custm-content-names {
     @include flex(flex, space-between, null, 460px, null, null);
@@ -145,16 +147,23 @@ $border: 1px solid #d9cccc;
 @media screen and (max-width: 500px) {
     .cartBag-content {
         width: 97%;
-        margin-left: 45px;
+        margin-left: 93px;
     }
     .address-frame {
         width: 100%;
-        margin-left: 44px;
+        margin-left: 87px;
+       
     }
     .order-frame {
         width: 93%;
-        margin-left: 42px;
+        margin-left: 82px;
     }
+    .address-frame-details{
+        width: 93%;
+    margin-left: 91px;
+    }
+    .order-content{width: 94%;
+    margin-left: 88px;}
 }
 @media screen and (max-width: 600px) {
     .custm-content-names {

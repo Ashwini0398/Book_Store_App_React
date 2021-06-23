@@ -6,6 +6,7 @@ import user_services from "../../Services/user_services";
 import { useEffect } from 'react';
 import './Dashboard.scss'
 import Cart from "../../Components/Cart/Cart";
+import Pagination from '@material-ui/lab/Pagination';
 import {
     Switch,
     Link
@@ -30,6 +31,17 @@ export default function DashboardPage(){
           console.log("error",error);
         })
     }
+
+    const getCartItem =()=>{
+        user_services.getCartItem().then((data) =>{
+            console.log(data);
+            // setCart(data.data.result);
+        }).catch(error=>{
+          console.log("error",error);
+        })
+
+    }
+    
     return (
         
         <div>
@@ -37,6 +49,7 @@ export default function DashboardPage(){
                 <div className="disp-books">
                     {books.map(booksDetails)}
                 </div>
+                <Pagination className="pageination"  variant="outlined" shape="rounded" />
             <Footer/>
         </div>
     );

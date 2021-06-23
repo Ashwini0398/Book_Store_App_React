@@ -79,7 +79,7 @@ const useStyles = makeStyles({
   },
   btn1Card:{
     width: '89px',
-    fontSize: '9px',
+    fontSize: '8px',
     fontWeight: 'bold',
     backgroundColor:'#A03037',
   },
@@ -99,18 +99,14 @@ export default function SimpleCard(props) {
 
   const redirectCart = () => {
     setRedirect("/Cart");
-    // return <ProtectedRoute exact path={"/Cart"}>
-    //   <Cart books= {val}/>
-    // </ProtectedRoute>
+    
   }
   if (redirect) {
     return <Redirect to={{
       pathname: redirect,
       state: { books: props.value }
     }} />
-    // return <ProtectedRoute exact path={"/Cart"}>
-    //   <Cart books= {props.value}/>
-    // </ProtectedRoute>
+    
   }
   else {
     return (
@@ -126,7 +122,9 @@ export default function SimpleCard(props) {
             <div>Rs.{props.value.price}</div>
           </CardActions>
           <div className={classes.buttonCard}>
-            <Button variant="contained" color="secondary" className={classes.btn1Card}>
+
+            
+            <Button variant="contained" color="secondary" className={classes.btn1Card} >
               ADD TO BAG
             </Button>
             <Button variant="contained" color="secondary" className={classes.btn2Card}>

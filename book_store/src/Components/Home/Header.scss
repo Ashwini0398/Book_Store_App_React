@@ -19,7 +19,9 @@
 }
 .text{
     font-size: 20px;
+    color: white !important;
     margin-left: 12px;
+    cursor: pointer;
 }
 .profile{
     @include icon(flex,column,null)

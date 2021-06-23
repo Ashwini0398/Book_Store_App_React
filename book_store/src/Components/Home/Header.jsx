@@ -70,14 +70,15 @@ class Home extends Component {
     }
 
     redirectCartBag = () => {
-        debugger;
         this.setState({ redirect: "/CartBag" });
 
+    }
+    redirectToDashboard =() =>{
+        this.setState({ redirect: "/Dashboard" });
     }
 
     render() {
         if (this.state.redirect) {
-            debugger;
             return <Redirect to={this.state.redirect} />
         }
         const { classes, theme } = this.props;
@@ -88,7 +89,7 @@ class Home extends Component {
                         <Toolbar>
                             <div className="header-title">
                                 <img className="img" src={book} alt="hii" />
-                                <div className="text">Bookstore</div>
+                                <div className="text" onClick={this.redirectToDashboard}>Bookstore</div>
                             </div>
                             <div className="search-bar">
                                 <div className={classes.search}>

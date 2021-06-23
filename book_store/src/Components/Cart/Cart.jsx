@@ -77,7 +77,6 @@ export default function Cart(props) {
     const classes = useStyles();
 
     const addToCart=()=>{
-        debugger;
         user_services.addToCart(props.location.state.books._id).then((data) =>{
             console.log(data);
             
@@ -85,7 +84,7 @@ export default function Cart(props) {
           console.log("error",error);
         })
     }
-
+    
     return (
         <>
             <div>

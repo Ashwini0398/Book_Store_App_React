@@ -12,14 +12,16 @@ import {ProtectedRoute} from '../src/Services/auth/protectedRoutes';
 import Header from './Components/Home/Header';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Cart from './Components/Cart/Cart';
+import Ordersucess from '../src/Components/OrderSucess/Ordersucess';
 function App() {
   return (
     <BrowserRouter>
       < Switch>
-        <Route path="/LoginSignUp" component={LoginDashboard} />
-        <ProtectedRoute path="/Dashboard" component={Dashboard} />
+        <Route exact path="/" component={LoginDashboard} />
+        <ProtectedRoute  path="/Dashboard" component={Dashboard} />
         <ProtectedRoute path="/Cart" component={Cart} />
         <ProtectedRoute path="/CartBag" component={Cartbag} />
+        <ProtectedRoute path="/orderSucess" component={Ordersucess} />
       </Switch>
     </BrowserRouter>
 
