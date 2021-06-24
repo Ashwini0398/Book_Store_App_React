@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { fade, withStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import './Header.scss';
@@ -11,12 +10,27 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import book from "../../Assets/book.svg";
 import { Redirect, useHistory } from "react-router-dom";
 import Badge from '@material-ui/core/Badge';
+import Card from "../../Components/Card/Card";
+import user_services from "../../Services/user_services";
+import { useEffect } from 'react';
+import Footer from '../Footer/Footer';
+import Dashboard from '../../Pages/Dashboard/Dashboard';
+import Pagination from '@material-ui/lab/Pagination';
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
+import Cartbag from '../Cartbag/Cartbag';  
+
 // import { browserHistory } from 'react-router';
 
 
 
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -59,38 +73,46 @@ const styles = theme => ({
             width: '20ch',
         },
     },
-})
+}));
 
-class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: ''
-        }
+export default function Home (props) {
+    const classes = useStyles();
+
+    const [redirect, setRedirect] = React.useState(null);
+    const [cart, setCart] = React.useState([]);
+
+    // useEffect(() => {
+    //     getCartItem();
+    // },[]);
+    
+
+    
+
+    const redirectTo=()=>{
+        console.log("hellloooooo")
+        setRedirect("/CartBag");
     }
 
-    redirectCartBag = () => {
-        this.setState({ redirect: "/CartBag" });
+    if (redirect) {
+        return <Redirect to={{
+          pathname: redirect,
+          state: { referrer: cart }
 
-    }
-    redirectToDashboard =() =>{
-        this.setState({ redirect: "/Dashboard" });
-    }
-
-    render() {
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />
-        }
-        const { classes, theme } = this.props;
+        }} />
+        
+      }
+      else {
         return (
             <>
                 <div className="root">
                     <AppBar className="app-header" position="fixed">
                         <Toolbar>
+                        <Link style={{textDecoration:"none"}} to={'/Dashboard'} >
                             <div className="header-title">
                                 <img className="img" src={book} alt="hii" />
-                                <div className="text" onClick={this.redirectToDashboard}>Bookstore</div>
+                                <div className="text">Bookstore</div>
                             </div>
+                        </Link>
                             <div className="search-bar">
                                 <div className={classes.search}>
                                     <div className={classes.searchIcon}>
@@ -112,11 +134,12 @@ class Home extends Component {
                                     <PersonOutlineIcon />
                                     <span>Profile</span>
                                 </div>
-                                <div className="cart" onClick={this.redirectCartBag} >
-                                    <Badge badgeContent={4} color="primary">
+                                <div className="cart" >
+                                
+                                    <Badge badgeContent={props.val} color="primary" onClick={()=>redirectTo()}>
                                         <ShoppingCartIcon />
                                     </Badge>
-
+                               
                                     <span>Cart</span>
                                 </div>
                             </div>
@@ -125,8 +148,7 @@ class Home extends Component {
                 </div>
             </>
         );
-
     }
 }
 
-export default withStyles(styles, { withTheme: true })(Home);
+

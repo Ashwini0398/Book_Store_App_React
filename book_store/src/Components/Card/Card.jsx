@@ -10,6 +10,7 @@ import { ProtectedRoute } from '../../Services/auth/protectedRoutes';
 import Cart from "../../Components/Cart/Cart";
 import { width } from '@material-ui/system';
 import { Redirect } from 'react-router';
+import user_services from "../../Services/user_services";
 import {
   Switch,
   Link,
@@ -88,6 +89,11 @@ const useStyles = makeStyles({
     fontSize: '9px',
     fontWeight: 'bold',
     backgroundColor:'#333333',
+  },
+  btn3Card:{
+    backgroundColor: '#3371B5',
+                 height: '25px',
+                 color: 'white',
   }
 });
 
@@ -95,12 +101,51 @@ export default function SimpleCard(props) {
   const classes = useStyles();
   const from = { pathname: '/Cart' };
   const [redirect, setRedirect] = React.useState(null);
-  const [cart,setCart]=React.useState([]);
 
-  const redirectCart = () => {
-    setRedirect("/Cart");
-    
+  const [open,setOpen]=  React.useState(false);
+
+
+  const [addCart,setAddCart]=React.useState([]);
+
+  let input = props.value;
+
+
+
+  const addToCart=(value)=>{
+
+    let Data = {
+      isCart: true
   }
+    
+    user_services.addToCart(value._id,Data).then((data) =>{
+        console.log(data);
+        ButtonClick(value.bookName);
+        
+    }).catch(error=>{
+      console.log("error",error);
+    })
+}
+
+const buttonClick=()=>{
+  
+}
+
+const wishlistToCart =(bookId)=>{}
+
+const ButtonClick =(bookName) =>{
+  let check = true;
+    addCart.map((val)=>{
+  
+      if(val.props.value.bookName === bookName){
+        check = false
+      }
+    })
+    return check;
+}
+  // const redirectCart = () => {
+  //   setRedirect("/Cart");
+    
+  // }
   if (redirect) {
     return <Redirect to={{
       pathname: redirect,
@@ -110,8 +155,8 @@ export default function SimpleCard(props) {
   }
   else {
     return (
-      <ProtectedRoute exact path={"/Dashboard"}>
-        <Card className={classes.root} onClick={() => redirectCart()}>
+      // <ProtectedRoute exact path={"/Dashboard"}>
+        <Card className={classes.root} >
           <CardContent className={classes.content}>
             <img className={classes.image} src={Image} alt="" />
           </CardContent>
@@ -122,17 +167,24 @@ export default function SimpleCard(props) {
             <div>Rs.{props.value.price}</div>
           </CardActions>
           <div className={classes.buttonCard}>
-
-            
-            <Button variant="contained" color="secondary" className={classes.btn1Card} >
+          {ButtonClick (props.value.bookName) ?
+          <>
+            <Button variant="contained" color="secondary" className={classes.btn1Card} onClick={()=>addToCart(props.value)} >
               ADD TO BAG
             </Button>
             <Button variant="contained" color="secondary" className={classes.btn2Card}>
               &#10084; WISHLIST
             </Button>
+            </>
+            :
+            <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
+            hello
+           </Button>  
+          }
+
           </div>
         </Card>
-      </ProtectedRoute>
+      // </ProtectedRoute>
     );
   }
 }
