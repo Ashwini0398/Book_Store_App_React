@@ -22,6 +22,11 @@ class UserService{
         return this.axios_service.post(url,data);
     }
 
+    OrderSucces(id,data){
+        let url = baseURL+`user/add_cart_item/${id}`;
+        return this.axios_service.post(url,data);
+    }
+
     getCartItem(){
         let url = baseURL+`user/get_cart_items`;
         return this.axios_service.get(url);

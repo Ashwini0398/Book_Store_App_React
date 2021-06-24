@@ -12,7 +12,8 @@ import {
     Link
   } from "react-router-dom";
 import Cartbag from '../../Components/Cartbag/Cartbag';
-import {ProtectedRoute} from '../../Services/auth/protectedRoutes';  
+import {ProtectedRoute} from '../../Services/auth/protectedRoutes'; 
+import BookDescription from '../../Components/BookDesciption/BookDescription'; 
 
   export default function Dashboard (){
 
@@ -45,23 +46,19 @@ import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
     }
     
     const booksDetails=(book)=>{
-        return(<Card value={book} get = {getAllBooks}/>)
+        return(<Card value={book} get = {getAllBooks} getCard={getCartItem}/>)
     }
 
         return (
             <>
+            
             <Header val={cart.length} />
-            {/* <ProtectedRoute
-                    exact path={"/Dashboard"}
-                    component={Dashboard}
-                > */}
                     <div>
                         <div className="disp-books">
                             {books.map(booksDetails)}
                         </div>
                         <Pagination className="pageination"  variant="outlined" shape="rounded" />
                     </div>
-                {/* </ProtectedRoute> */}
             <Footer/>
             </>
         );

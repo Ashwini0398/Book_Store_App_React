@@ -22,9 +22,10 @@ function App() {
       < Switch>
       <ProtectedRoute path="/Dashboard" component={Dashboard} />
       <ProtectedRoute path="/CartBag" component={CartBAG} />
-        <Route  path="/" component={LoginDashboard} />    
-        <ProtectedRoute path="/orderSucess" component={Ordersucess} />
+      <ProtectedRoute path="/orderSucess" component={Ordersucess} />
         
+        <Route  path="/" component={LoginDashboard} />    
+       
       </Switch>
     </BrowserRouter>
 

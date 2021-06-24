@@ -11,6 +11,7 @@ import Cart from "../../Components/Cart/Cart";
 import { width } from '@material-ui/system';
 import { Redirect } from 'react-router';
 import user_services from "../../Services/user_services";
+import BookDescription from '../BookDesciption/BookDescription';
 import {
   Switch,
   Link,
@@ -71,29 +72,29 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-  buttonCard:{
+  buttonCard: {
     width: '224px',
     height: '36px',
     marginBottom: '12px',
     display: 'flex',
     justifyContent: 'space-evenly'
   },
-  btn1Card:{
+  btn1Card: {
     width: '89px',
     fontSize: '8px',
     fontWeight: 'bold',
-    backgroundColor:'#A03037',
+    backgroundColor: '#A03037',
   },
-  btn2Card:{
+  btn2Card: {
     width: '89px',
     fontSize: '9px',
     fontWeight: 'bold',
-    backgroundColor:'#333333',
+    backgroundColor: '#333333',
   },
-  btn3Card:{
+  btn3Card: {
     backgroundColor: '#3371B5',
-                 height: '25px',
-                 color: 'white',
+    height: '25px',
+    color: 'white',
   }
 });
 
@@ -102,89 +103,101 @@ export default function SimpleCard(props) {
   const from = { pathname: '/Cart' };
   const [redirect, setRedirect] = React.useState(null);
 
-  const [open,setOpen]=  React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [addCart, setAdd] = React.useState([]);
 
-
-  const [addCart,setAddCart]=React.useState([]);
+  const [notes, setNotes] = React.useState([]);
 
   let input = props.value;
 
 
 
-  const addToCart=(value)=>{
+  const addToCart = (value) => {
 
     let Data = {
       isCart: true
-  }
-    
-    user_services.addToCart(value._id,Data).then((data) =>{
-        console.log(data);
-        ButtonClick(value.bookName);
-        
-    }).catch(error=>{
-      console.log("error",error);
+    }
+
+    user_services.addToCart(value._id, Data).then((data) => {
+      console.log(data);
+      props.getCard();
+      ButtonClick(value.bookName);
+      
+    }).catch(error => {
+      console.log("error", error);
     })
-}
+  }
 
-const buttonClick=()=>{
-  
-}
 
-const wishlistToCart =(bookId)=>{}
+  const descriptionshow = (e) => {
+    e.stopPropagation();
+    setOpen(true);
+  }
+  const descriptionhide = (e) => {
+    e.stopPropagation();
+    setOpen(false);
+  }
 
-const ButtonClick =(bookName) =>{
-  let check = true;
-    addCart.map((val)=>{
-  
-      if(val.props.value.bookName === bookName){
+  const descriptionclose = (id) => {
+    // let findIndex = notes.findIndex((element ) => element.id == id);
+
+    // let newArray = [...notes]
+
+    // newArray[findIndex].isdescription = false;
+
+    // setNotes( newArray);
+    setOpen(false);
+  }
+
+
+  const ButtonClick = (bookName) => {
+    let check = true;
+    addCart.map((val) => {
+
+      if (val.props.value.bookName === bookName) {
         check = false
       }
     })
     return check;
-}
-  // const redirectCart = () => {
-  //   setRedirect("/Cart");
-    
-  // }
-  if (redirect) {
-    return <Redirect to={{
-      pathname: redirect,
-      state: { books: props.value }
-    }} />
-    
   }
-  else {
-    return (
-      // <ProtectedRoute exact path={"/Dashboard"}>
-        <Card className={classes.root} >
-          <CardContent className={classes.content}>
-            <img className={classes.image} src={Image} alt="" />
-          </CardContent>
-          <CardActions className={classes.cardTxt}>
-            <div className={classes.bookTitle}>{props.value.bookName}</div>
-            <div className={classes.bookAuthor}>by {props.value.author}</div>
-            <div className={classes.bookRating}>4.5 &#9733;</div>
-            <div>Rs.{props.value.price}</div>
-          </CardActions>
-          <div className={classes.buttonCard}>
-          {ButtonClick (props.value.bookName) ?
+
+  return (
+    // <ProtectedRoute exact path={"/Dashboard"}>
+    <Card className={classes.root} >
+      <CardContent className={classes.content} onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>
+        <div style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div>
+        <img style={{ display: open ? 'none' : 'block' }} className={classes.image} src={Image} alt="" />
+        {/* } */}
+
+
+      </CardContent>
+      <CardActions className={classes.cardTxt}>
+        <div className={classes.bookTitle}>{props.value.bookName}</div>
+        <div className={classes.bookAuthor}>by {props.value.author}</div>
+        <div className={classes.bookRating}>4.5 &#9733;</div>
+        <div>Rs.{props.value.price}</div>
+      </CardActions>
+
+      <div className={classes.buttonCard}>
+        {ButtonClick(props.value.bookName) ?
           <>
-            <Button variant="contained" color="secondary" className={classes.btn1Card} onClick={()=>addToCart(props.value)} >
+            <Button variant="contained" color="secondary" id={props.value._id} className={classes.btn1Card} onClick={() => addToCart(props.value)} >
               ADD TO BAG
             </Button>
             <Button variant="contained" color="secondary" className={classes.btn2Card}>
               &#10084; WISHLIST
             </Button>
-            </>
-            :
-            <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
+          </>
+          :
+          <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
             hello
-           </Button>  
-          }
+          </Button>
+        }
 
-          </div>
-        </Card>
-      // </ProtectedRoute>
-    );
-  }
+      </div>
+
+    </Card>
+    // </ProtectedRoute>
+  );
 }
+

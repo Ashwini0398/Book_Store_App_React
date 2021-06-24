@@ -4,7 +4,8 @@ import Image from '../../Assets/Image.png';
 
 const CartDetails = (props) => {
 
-    const [count, setCount] = React.useState(1);
+    const [count, setCount] = React.useState([props.val.length]);
+
 
     const removeItem = (e) => {
         // e.stopPropagation();
@@ -18,21 +19,25 @@ const CartDetails = (props) => {
         })
     }
 
-    const decrease =(e)=>{
-        debugger;
-        e.stopPropagation();
-        let set = count;
-        setCount(--set);
+    const decrease =(i)=>{
+        if(count[i] === undefined){
+            count[i]=0
+        }
+        // e.stopPropagation();
+        let set = count[i];
+        setCount({ ...count, [i]: --set });
         console.log(count);
     }
 
 
-    const increase =(e)=>{
-        debugger;
-        e.stopPropagation();
-        let set = count;
-        setCount(++set);
-        console.log(count);
+    const increase =(i)=>{
+        if(count[i] === undefined){
+            count[i]=0
+        }
+        // e.stopPropagation();
+        let set = count[i];
+        setCount({ ...count, [i]: ++set });
+        console.log(count[i]);
     }
 
     return (
@@ -49,9 +54,9 @@ const CartDetails = (props) => {
                         <div className="price">Rs.{value.product_id.price}</div>
                     </div>
                     <div className="count-content">
-                        <div className="minus" style={{cursor:'pointer'}} onClick={e => decrease(e)}>-</div>
-                        <div className="count">{count}</div>
-                        <div className="plus" style={{cursor:'pointer'}} onClick={e=> increase(e)}>+</div>
+                        <div className="minus" style={{cursor:'pointer'}} onClick={()=>decrease(index)}>-</div>
+                        <div className="count">{count[index]}</div>
+                        <div className="plus" style={{cursor:'pointer'}} onClick={()=>increase(index)}>+</div>
                         <div className="remove" onClick={()=>removeItem(value._id)}>Remove</div>
                     </div>
                 </div>

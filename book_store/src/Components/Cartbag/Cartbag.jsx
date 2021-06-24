@@ -41,6 +41,7 @@ export default class Cartbag extends Component {
             LandMarkError: false,
             temp: false,
             details: [false],
+            redirect:''
 
         }
 
@@ -163,10 +164,13 @@ export default class Cartbag extends Component {
     }
 
     OrderPlaced=()=>{
-        
+        this.setState({redirect: "/orderSucess"});
     }
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to ={this.state.redirect}/>
+        }
         let styles = {
             helperText: {
 
@@ -176,6 +180,8 @@ export default class Cartbag extends Component {
                 marginLeft: '1px',
             }
         }
+        
+      
         console.log("get books",this.getCartItem);
         return (
             <div>
