@@ -6,7 +6,6 @@ const CartDetails = (props) => {
 
     const [count, setCount] = React.useState([props.val.length]);
 
-
     const removeItem = (e) => {
         // e.stopPropagation();
        
@@ -26,7 +25,8 @@ const CartDetails = (props) => {
         // e.stopPropagation();
         let set = count[i];
         setCount({ ...count, [i]: --set });
-        console.log(count);
+        props.send(count);
+        console.log(count[i]);
     }
 
 
@@ -37,6 +37,7 @@ const CartDetails = (props) => {
         // e.stopPropagation();
         let set = count[i];
         setCount({ ...count, [i]: ++set });
+        props.send(count);
         console.log(count[i]);
     }
 
@@ -54,7 +55,7 @@ const CartDetails = (props) => {
                         <div className="price">Rs.{value.product_id.price}</div>
                     </div>
                     <div className="count-content">
-                        <div className="minus" style={{cursor:'pointer'}} onClick={()=>decrease(index)}>-</div>
+                        <div className="minus" style={{cursor:'pointer'}} onClick={()=>decrease(index)} >-</div>
                         <div className="count">{count[index]}</div>
                         <div className="plus" style={{cursor:'pointer'}} onClick={()=>increase(index)}>+</div>
                         <div className="remove" onClick={()=>removeItem(value._id)}>Remove</div>

@@ -13,11 +13,16 @@ import { Redirect } from 'react-router';
 import user_services from "../../Services/user_services";
 import Image from '../../Assets/Image.png';
 import CartDetails from './CartDetails';
-import { render } from 'react-dom';
-import CartDisp from '../Cartbag/CartDisp';
+
+
+let Regex = RegExp('^[A-Z]{1}[a-z]{2,}$');
+let MobilenoRegex = RegExp('/^[6-9]{1}[0-9]{9}$/');
+let PinCodeREgex = RegExp('[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{3}\\s[0-9]{3}');
 
 export default class Cartbag extends Component {
     _isMounted = false;
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -31,126 +36,102 @@ export default class Cartbag extends Component {
             Locality: '',
             Address: '',
             City: '',
-            LandMark: '',
+            State: '',
             FullNameError: false,
             NumberError: false,
             PinCodeError: false,
             LocalityError: false,
             AddressError: false,
             CityError: false,
-            LandMarkError: false,
+            StateError: false,
             temp: false,
             details: [false],
-            redirect:''
+            redirect: '',
+            cartCount: [],
 
         }
 
     }
 
-    // shouldComponentUpdate(){}
+
 
     componentDidMount() {
         this._isMounted = true;
-       
+
         this.getCartItem();
     }
-    // componentWillUnmount() {
-    //     this._isMounted = false;
-    // }
 
-    validation = () => {
-        let isError = false;
-        const error = this.state;
 
-        error.FullNameError = this.state.FullName === '' ? true : false;
-        error.NumberError = this.state.Number === '' ? true : false;
-        error.PinCodeError = this.state.PinCode === '' ? true : false;
-        error.LocalityError = this.state.Locality === '' ? true : false;
-        error.AddressError = this.state.Address === '' ? true : false;
-        error.CityError = this.state.City === '' ? true : false;
-        error.LandMarkError = this.state.LandMark === '' ? true : false;
-        this.setState({
+    validationTest = (test, val) => {
+        if (test.test(val)) {
+            console.log("Value", val);
+            console.log("test result", test.test(val));
+
+            return true
+        }
+        else {
+            return false;
+        }
+    }
+
     
-            ...error
-          })
-
-        return isError = (error.FullName !== '' && error.Number !== ''
-            && error.PinCode !== '' && error.Locality !== ''
-            && error.Address !== '' && error.City !== ''
-            && error.LandMark !== '') ? true : false
-
-    }
-
-    changeFullName = (e) => {
+    change = (e) => {
 
         this.setState({
-            FullName: e.target.value,
+            [e.target.name]:e.target.value,
             flag: 1,
-        }, () => console.log(this.state.FullName));
+        });
     }
-    changeNumber = (e) => {
-
-        this.setState({
-            Number: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.Number));
-    }
-
-    changePincode = (e) => {
-
-        this.setState({
-            PinCode: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.PinCode));
-    }
-
-    changeLocality = (e) => {
-
-        this.setState({
-            Locality: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.Locality));
-    }
-
-    changeAddress = (e) => {
-
-        this.setState({
-            Address: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.Address));
-    }
-
-    changeCity = (e) => {
-
-        this.setState({
-            City: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.City));
-    }
-
-    changeLandmark = (e) => {
-
-        this.setState({
-            LandMark: e.target.value,
-            flag: 1,
-        }, () => console.log(this.state.LandMark));
-    }
+    
 
 
     handleContinue = () => {
-        const isValidated = this.validation();
-        this.setState({ temp: true });
-        console.log(isValidated);
-        if (isValidated) {
-            console.log()
-            this.setState({openCon:true});
+        this.setState({
+            FullNameError: !this.validationTest(Regex, this.state.FullName),
+            NumberError: this.validationTest(MobilenoRegex, this.state.Number),
+            PinCodeError: !this.validationTest(PinCodeREgex, this.state.PinCode),
+            LocalityError: !this.validationTest(Regex, this.state.Locality),
+            AddressError: !this.validationTest(Regex, this.state.Address),
+            CityError: !this.validationTest(Regex, this.state.City),
+            StateError: !this.validationTest(Regex, this.state.State)
+        });
+        // console.log("validation---", isValidated);
+        if (this.state.flag === 1
+            && !this.state.FullNameError
+            && !this.state.NumberError
+            && !this.state.PinCodeError
+            && !this.state.LocalityError
+            && !this.state.AddressError
+            && !this.state.CityError
+            && !this.state.StateError) {
+            {
+                // debugger;
+                console.log("validation successfull");
+
+                let userData = {
+                    "addressType": "Home",
+                    "fullAddress": `${this.state.FullName},${this.state.Address},${this.state.Locality},${this.state.PinCode},${this.state.Number}`,
+                    "city": this.state.City,
+                    "state": this.state.State
+                }
+                user_services.customerDetails(userData).then((data) => {
+                    console.log('data customeer details', data);
+                    this.setState({ openCon: true});
+
+
+                })
+                    .catch(error => {
+                        console.log('Error', error);
+                    });
+               
+            }
         }
     }
 
 
 
     handleClick = () => {
-        this.setState({open:true});
+        this.setState({ open: true });
     }
 
     getCartItem = () => {
@@ -163,13 +144,39 @@ export default class Cartbag extends Component {
 
     }
 
-    OrderPlaced=()=>{
-        this.setState({redirect: "/orderSucess"});
+    sendCount = (count) => {
+        this.setState({ cartCount: count });
+    }
+
+    OrderPlaced = () => {
+        let orderDetails = [];
+        this.state.book.map((val) => {
+            let arr = {
+                "product_id": val.product_id._id,
+                "product_name": val.product_id.bookName,
+                "product_quantity": val.quantityToBuy,
+                "product_price": val.product_id.price
+            };
+            orderDetails.push(arr);
+        })
+
+        let data = {
+            orders: orderDetails,
+        };
+        user_services.orderItem(data).then((res) => {
+            console.log(res);
+            this.setState({ redirect: "/orderSucess" });
+        }).catch((err) => {
+            console.log(err);
+        })
+       
     }
 
     render() {
-        if(this.state.redirect){
-            return <Redirect to ={this.state.redirect}/>
+        console.log("book id ",this.state.book)
+        if (this.state.redirect) {
+            return <Redirect to={{pathname: this.state.redirect,
+                state: { details: this.state.book}}} />
         }
         let styles = {
             helperText: {
@@ -180,9 +187,7 @@ export default class Cartbag extends Component {
                 marginLeft: '1px',
             }
         }
-        
-      
-        console.log("get books",this.getCartItem);
+
         return (
             <div>
                 <Headers val={this.state.book.length} />
@@ -190,9 +195,10 @@ export default class Cartbag extends Component {
                     <div className="title">Home/My Cart</div>
                     <div className="cartBag-content">
                         <div >My Cart ({this.state.book.length})</div>
-                        <CartDetails val={this.state.book}  get={this.getCartItem} />
-                        {/* <CartDisp val={this.state.book} /> */}
-                        {/* { this.state.cartData.map((this.cartBagDetails)) } */}
+                        <CartDetails val={this.state.book} get={this.getCartItem} send={(Data) => {
+                            this.sendCount(Data);
+                            { { console.log("CartCount", this.state.cartCount) } }
+                        }} />
                         <div className="btn-content">
                             <Button variant="contained" className="btn-place" onClick={this.handleClick} >
                                 Place Order
@@ -214,9 +220,9 @@ export default class Cartbag extends Component {
                                         size="small"
                                         label="FullName"
                                         type="text"
-                                        name="text"
+                                        name="FullName"
                                         variant="outlined"
-                                        onChange={e => this.changeFullName(e)}
+                                        onChange={e => this.change(e)}
                                         helperText={this.state.FullNameError ? "Enter FullName" : ''}
                                         FormHelperTextProps={{ style: styles.helperText }}
                                     />
@@ -228,11 +234,12 @@ export default class Cartbag extends Component {
                                         disabled={this.state.temp}
                                         size="small"
                                         label="Phone Number"
-                                        type="Number"
+                                        type="text"
                                         name="Number"
                                         variant="outlined"
-                                        onChange={e => this.changeNumber(e)}
+                                        onChange={e => this.change(e)}
                                         helperText={this.state.NumberError ? "Enter Phone Number" : ''}
+                                        FormHelperTextProps={{ style: styles.helperText }}
                                     /></div>
                                 </div>
                             </div>
@@ -244,10 +251,11 @@ export default class Cartbag extends Component {
                                         size="small"
                                         label="Pin Code"
                                         type="text"
-                                        name="text"
+                                        name="PinCode"
                                         variant="outlined"
-                                        onChange={e => this.changePincode(e)}
+                                        onChange={e => this.change(e)}
                                         helperText={this.state.PinCodeError ? "Enter Pincode " : ''}
+                                        FormHelperTextProps={{ style: styles.helperText }}
                                     />
                                 </div>
                                 <div className="InputFields">
@@ -257,10 +265,11 @@ export default class Cartbag extends Component {
                                         size="small"
                                         label="Locality"
                                         type="text"
-                                        name="text"
+                                        name="Locality"
                                         variant="outlined"
-                                        onChange={e => this.changeLocality(e)}
+                                        onChange={e => this.change(e)}
                                         helperText={this.state.LocalityError ? "Enter Locality" : ''}
+                                        FormHelperTextProps={{ style: styles.helperText }}
                                     />
                                 </div>
                             </div>
@@ -270,11 +279,12 @@ export default class Cartbag extends Component {
                                 disabled={this.state.temp}
                                 label="Address"
                                 type="text"
-                                name="text"
+                                name="Address"
                                 variant="outlined"
                                 fullWidth
-                                onChange={e => this.changeAddress(e)}
+                                onChange={e => this.change(e)}
                                 helperText={this.state.AddressError ? "Enter Address" : ''}
+                                FormHelperTextProps={{ style: styles.helperText }}
                             /></div>
 
 
@@ -286,22 +296,24 @@ export default class Cartbag extends Component {
                                         size="small"
                                         label="City"
                                         type="text"
-                                        name="text"
+                                        name="City"
                                         variant="outlined"
-                                        onChange={e => this.changeCity(e)}
-                                        helperText={this.state.CityError ? "Enter City" : ''} /></div>
+                                        onChange={e => this.change(e)}
+                                        helperText={this.state.CityError ? "Enter City" : ''}
+                                        FormHelperTextProps={{ style: styles.helperText }} /></div>
                                 </div>
                                 <div className="state">
                                     <div><TextField
-                                        error={this.state.LandMarkError}
+                                        error={this.state.StateError}
                                         disabled={this.state.temp}
                                         size="small"
                                         label="LandMark"
                                         type="text"
-                                        name="text"
+                                        name="State"
                                         variant="outlined"
-                                        onChange={e => this.changeLandmark(e)}
-                                        helperText={this.state.LandMarkError ? "Enter LandMark" : ''}
+                                        onChange={e => this.change(e)}
+                                        helperText={this.state.StateError ? "Enter LandMark" : ''}
+                                        FormHelperTextProps={{ style: styles.helperText }}
                                     /></div>
                                 </div>
                             </div>
@@ -340,12 +352,13 @@ export default class Cartbag extends Component {
                                     label="Other"
                                 /> </div>
 
-
-                            <div className="btn-content">
-                                <Button variant="contained" className="btn-place" onClick={this.handleContinue}>
-                                    Continue
-                                </Button>
-                            </div>
+                            {this.state.openCon ? null :
+                                <div className="btn-content">
+                                    <Button variant="contained" className="btn-place" onClick={this.handleContinue}>
+                                        Continue
+                                    </Button>
+                                </div>
+                            }
                         </div>
 
                         :
@@ -355,26 +368,41 @@ export default class Cartbag extends Component {
                         </div>
 
                     }
+
+
                     {this.state.openCon ?
+
                         <div className="order-content">
+
                             <div className="header-detail" >Order Summary</div>
-                            <div className="main-cart">
-                                <div>
-                                    <img className="img-book" src={Image} alt="lll" />
-                                </div>
-                                <div className="text-content">
-                                    <div className="bag-text">
-                                        <div className="cart-title">Good</div>
-                                        <div className="cart-bookAuthor">by ashu</div>
-                                        <div className="price">Rs.600</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="btn-content">
-                                <Button variant="contained" className="btn-place" onClick={this.OrderPlaced} >
-                                    Checkout
-                                </Button>
-                            </div>
+                            <>{this.state.book.map((value, index) => {
+                                return (
+                                    <div>
+                                    <div className="main-cart">
+                                        <div>
+                                            <img className="img-book" src={Image} alt="lll" />
+                                        </div>
+                                        <div className="text-content">
+                                            <div className="bag-text">
+                                                <div className="cart-title">{value.product_id.bookName}</div>
+                                                <div className="cart-bookAuthor">by {value.product_id.author}</div>
+                                                <div className="price">Rs.{value.product_id.price}</div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        {this.state.book.length - 1 == index ?
+                                            <div className="btn-content">
+                                                <Button variant="contained" className="btn-place" onClick={this.OrderPlaced} >
+                                                    Checkout
+                                                </Button>
+                                            </div> : null}
+                                 </div> 
+
+                                )
+                            })
+                            } </>
+
+
                         </div>
                         :
                         <div className="order-frame" >

@@ -14,7 +14,9 @@ class Ordersucess extends Component {
         }
     }
     
-
+    componentDidMount(){
+        console.log("book array",this.props.location.state.details)
+    }
     continueShoping = () => {
         this.setState({ redirect: "/Dashboard" });
     }
@@ -25,10 +27,12 @@ class Ordersucess extends Component {
             return <Redirect to={this.state.redirect} />
         }
 
-
+       
         return (
             <div>
                 <Header />
+                {this.props.location.state.details.map((value,index )=>
+                    
                 <div className="Conatiner-last">
                     <div className="Lastimg">
                         <img id="Last-image" src={Lastimage} alt="Book" />
@@ -37,13 +41,27 @@ class Ordersucess extends Component {
                         hurray!!!! your order is confirmed
                         </div>
                     <div className="Last-Text">
-                        the order id is 60b996b3f601ea72faca6998
+                        the order id is {value._id}
                         </div>
                     <div className="Last-Text">
                         save the order id for
                         </div>
                     <div className="Last-Text">
                         future communication
+                    </div>
+                    <div className="table">
+                        <table>
+                            <tr>
+                                <th>Email us</th>
+                                <th>Contact us</th>
+                                <th>Address</th>
+                            </tr>
+                            <tr>
+                                <td>admin@bookstore.com</td>
+                                <td>#91 9172104669</td>
+                                <td>Mumbai, India </td>
+                            </tr>
+                        </table>
                     </div>
                     <div className="Last-Button">
                         <Button className="buttonsize" onClick={this.continueShoping} fullWidth size="small" color="primary" variant="contained">
@@ -52,6 +70,7 @@ class Ordersucess extends Component {
                     </div>
 
                 </div>
+                )}
                 <Footer />
             </div>
         );

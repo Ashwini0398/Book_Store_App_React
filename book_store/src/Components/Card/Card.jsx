@@ -93,24 +93,23 @@ const useStyles = makeStyles({
   },
   btn3Card: {
     backgroundColor: '#3371B5',
-    height: '25px',
+    width: '88%',
+    height: '39px',
     color: 'white',
   }
 });
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  const from = { pathname: '/Cart' };
-  const [redirect, setRedirect] = React.useState(null);
-
   const [open, setOpen] = React.useState(false);
   const [addCart, setAdd] = React.useState([]);
-
-  const [notes, setNotes] = React.useState([]);
-
-  let input = props.value;
+  const [displayCart, setDisplayCart,] = React.useState(false);
 
 
+  const ButtonClick = () => {
+    setDisplayCart(true);
+
+  }
 
   const addToCart = (value) => {
 
@@ -122,7 +121,7 @@ export default function SimpleCard(props) {
       console.log(data);
       props.getCard();
       ButtonClick(value.bookName);
-      
+
     }).catch(error => {
       console.log("error", error);
     })
@@ -138,38 +137,12 @@ export default function SimpleCard(props) {
     setOpen(false);
   }
 
-  const descriptionclose = (id) => {
-    // let findIndex = notes.findIndex((element ) => element.id == id);
-
-    // let newArray = [...notes]
-
-    // newArray[findIndex].isdescription = false;
-
-    // setNotes( newArray);
-    setOpen(false);
-  }
-
-
-  const ButtonClick = (bookName) => {
-    let check = true;
-    addCart.map((val) => {
-
-      if (val.props.value.bookName === bookName) {
-        check = false
-      }
-    })
-    return check;
-  }
 
   return (
-    // <ProtectedRoute exact path={"/Dashboard"}>
     <Card className={classes.root} >
       <CardContent className={classes.content} onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>
         <div style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div>
         <img style={{ display: open ? 'none' : 'block' }} className={classes.image} src={Image} alt="" />
-        {/* } */}
-
-
       </CardContent>
       <CardActions className={classes.cardTxt}>
         <div className={classes.bookTitle}>{props.value.bookName}</div>
@@ -177,9 +150,12 @@ export default function SimpleCard(props) {
         <div className={classes.bookRating}>4.5 &#9733;</div>
         <div>Rs.{props.value.price}</div>
       </CardActions>
-
-      <div className={classes.buttonCard}>
-        {ButtonClick(props.value.bookName) ?
+      <div className={classes.buttonCard} onClick={ButtonClick}>
+        {displayCart ?
+          <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
+            ADD TO BAG
+          </Button>
+          :
           <>
             <Button variant="contained" color="secondary" id={props.value._id} className={classes.btn1Card} onClick={() => addToCart(props.value)} >
               ADD TO BAG
@@ -188,16 +164,12 @@ export default function SimpleCard(props) {
               &#10084; WISHLIST
             </Button>
           </>
-          :
-          <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
-            hello
-          </Button>
+
+
         }
 
       </div>
-
     </Card>
-    // </ProtectedRoute>
   );
 }
 

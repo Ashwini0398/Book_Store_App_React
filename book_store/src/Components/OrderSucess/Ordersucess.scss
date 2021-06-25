@@ -19,3 +19,12 @@
     font-size: large;
     font-family: ui-sans-serif;
 }
+.table{
+    border: 1px solid grey;
+    th{
+        background-color: #DCDCDC;
+    }
+     td{
+         padding: 15px;
+     }
+}

@@ -80,13 +80,16 @@ export default function Home (props) {
 
     const [redirect, setRedirect] = React.useState(null);
     const [cart, setCart] = React.useState([]);
-
+    const [search, setSearch] = React.useState("");
     // useEffect(() => {
     //     getCartItem();
     // },[]);
     
 
-    
+    const searchBooks =(e)=>{
+        setSearch(e.target.value);
+        console.log(e.target.value);
+    }
 
     const redirectTo=()=>{
         console.log("hellloooooo")
@@ -118,12 +121,15 @@ export default function Home (props) {
                                     <div className={classes.searchIcon}>
                                         <SearchIcon />
                                     </div>
-                                    <InputBase
+                                    <InputBase 
                                         style={{ color: 'grey' }}
                                         placeholder="Search…"
+                                        value={search}
+                                        onChange={(e)=>searchBooks(e)}
                                         classes={{
                                             root: classes.inputRoot,
                                             input: classes.inputInput,
+                                           
                                         }}
                                         inputProps={{ 'aria-label': 'search' }}
                                     />
