@@ -77,7 +77,7 @@ export default function Dashboard() {
     }
   }
   const handlePagination = (e, newPages) => {
-    setPerPage(e.target.value);
+    // setPerPage(e.target.value);
     setCurrentPage(newPages);
 
   }
@@ -102,7 +102,7 @@ export default function Dashboard() {
         <div className="disp-sort">
           <div className="disp-title">
             <span className="books-show">Books</span>
-            <span>({books.length}items)</span>
+            <span>({currentBooks.length}items)</span>
           </div>
           <div>
             <select style={{ width: '157px', height: '47px' }} onChange={(e) => sort(e)} >
