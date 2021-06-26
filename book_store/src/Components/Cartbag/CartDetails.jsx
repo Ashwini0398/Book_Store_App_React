@@ -8,8 +8,8 @@ const CartDetails = (props) => {
 
     const removeItem = (e) => {
         // e.stopPropagation();
-       
-        console.log("id ",e );
+
+        console.log("id ", e);
         user_services.deleteItem(e).then((data) => {
             console.log(data);
             props.get();
@@ -18,51 +18,55 @@ const CartDetails = (props) => {
         })
     }
 
-    const decrease =(i)=>{
-        if(count[i] === undefined){
-            count[i]=0
+
+
+    const increase = (productid, quantity) => {
+        let data = {
+            "quantityToBuy": quantity + 1
         }
-        // e.stopPropagation();
-        let set = count[i];
-        setCount({ ...count, [i]: --set });
-        props.send(count);
-        console.log(count[i]);
+        console.log(data, productid);
+        user_services.cartQuantity(data, productid).then((res) => {
+            console.log(res);
+            props.get();
+        }).catch((err) => {
+            console.log(err);
+        })
     }
-
-
-    const increase =(i)=>{
-        if(count[i] === undefined){
-            count[i]=0
+    const decrease = (productid, quantity) => {
+        let data = {
+            "quantityToBuy": quantity - 1
         }
-        // e.stopPropagation();
-        let set = count[i];
-        setCount({ ...count, [i]: ++set });
-        props.send(count);
-        console.log(count[i]);
+        console.log(data, productid);
+        user_services.cartQuantity(data, productid).then((res) => {
+            console.log(res);
+            props.get();
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
     return (
         <>
-        { props.val.map((value,index)=>
-            <div className="main-cart">
-                <div>
-                    <img className="img-book" src={Image} alt="lll" />
-                </div>
-                <div className="text-content">
-                    <div className="bag-text">
-                        <div className="cart-title">{value.product_id.bookName}</div>
-                        <div className="cart-bookAuthor">by {value.product_id.author}</div>
-                        <div className="price">Rs.{value.product_id.price}</div>
+            {props.val.map((value, index) =>
+                <div className="main-cart">
+                    <div>
+                        <img className="img-book" src={Image} alt="lll" />
                     </div>
-                    <div className="count-content">
-                        <div className="minus" style={{cursor:'pointer'}} onClick={()=>decrease(index)} >-</div>
-                        <div className="count">{count[index]}</div>
-                        <div className="plus" style={{cursor:'pointer'}} onClick={()=>increase(index)}>+</div>
-                        <div className="remove" onClick={()=>removeItem(value._id)}>Remove</div>
+                    <div className="text-content">
+                        <div className="bag-text">
+                            <div className="cart-title">{value.product_id.bookName}</div>
+                            <div className="cart-bookAuthor">by {value.product_id.author}</div>
+                            <div className="price">Rs.{value.product_id.price}</div>
+                        </div>
+                        <div className="count-content">
+                            <div className="minus" style={{ cursor: 'pointer' }} onClick={() => decrease(value._id, value.quantityToBuy)} >-</div>
+                            <div className="count">{value.quantityToBuy}</div>
+                            <div className="plus" style={{ cursor: 'pointer' }} onClick={() => increase(value._id, value.quantityToBuy)}>+</div>
+                            <div className="remove" onClick={() => removeItem(value._id)}>Remove</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            ) } 
+            )}
         </>
     );
 }

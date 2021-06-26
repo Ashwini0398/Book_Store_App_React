@@ -45,13 +45,14 @@ class UserService{
 
     cartQuantity=(data,cartItem_id)=>{
         let url = baseURL+`user/cart_item_quantity/${cartItem_id}`;
-        return this.axios_service.post(url,data); 
+        return this.axios_service.put(url,data); 
     }
 
     customerDetails=(data)=>{
         let url = baseURL+`user/edit_user`;
         return this.axios_service.put(url,data); 
     }
+   
 
     orderItem=(data)=>{
         console.log(localStorage.getItem('usertoken'));

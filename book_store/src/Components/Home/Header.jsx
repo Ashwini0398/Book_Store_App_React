@@ -100,7 +100,6 @@ export default function Home (props) {
         return <Redirect to={{
           pathname: redirect,
           state: { referrer: cart }
-
         }} />
         
       }

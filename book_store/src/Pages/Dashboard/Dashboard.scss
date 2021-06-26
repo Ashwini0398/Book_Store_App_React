@@ -1,8 +1,18 @@
+.book-show{
+    font-size: larger;
+    font-weight: 600;
+}
+.disp-sort{
+    display: flex;
+    padding: 40px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
 .disp-books{
     display: flex;
     flex-wrap: wrap;
     padding: 40px;
     justify-content: center;
     align-items: center;
-    margin-top: 117px;
 }
