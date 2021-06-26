@@ -81,14 +81,26 @@ export default function Home (props) {
     const [redirect, setRedirect] = React.useState(null);
     const [cart, setCart] = React.useState([]);
     const [search, setSearch] = React.useState("");
-    // useEffect(() => {
-    //     getCartItem();
-    // },[]);
+    const [searchData, setSearchData] = React.useState([]);
+
+    useEffect(() => {
+      console.log("book data",props.book)
+    },[]);
     
 
     const searchBooks =(e)=>{
+        
         setSearch(e.target.value);
+        
         console.log(e.target.value);
+        let newFilter = props.book.filter((val)=>{
+                return val.bookName.indexOf(search) != -1;
+        });
+     setSearchData(newFilter);
+
+     console.log("filter",newFilter)
+
+        
     }
 
     const redirectTo=()=>{

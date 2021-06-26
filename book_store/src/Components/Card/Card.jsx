@@ -11,7 +11,7 @@ import Cart from "../../Components/Cart/Cart";
 import { width } from '@material-ui/system';
 import { Redirect } from 'react-router';
 import user_services from "../../Services/user_services";
-import BookDescription from '../BookDesciption/BookDescription';
+
 import {
   Switch,
   Link,
