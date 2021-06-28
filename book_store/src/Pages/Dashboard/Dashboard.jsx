@@ -20,7 +20,7 @@ export default function Dashboard() {
   const [cart, setCart] = React.useState([]);
   const [perPage, setPerPage] = React.useState("8");
   const [currentPage, setCurrentPage] = React.useState("1");
-
+  const [search,searchBook] = React.useState("");
 
   useEffect(() => {
     getAllBooks();
@@ -87,13 +87,9 @@ export default function Dashboard() {
   }
 
 
-  const LastBook = currentPage * perPage;
-  const FirstBook = LastBook - perPage;
-  console.log("asdfgh=================>", books);
-  // console.log('vfvc', this.state._books);
-  const currentBooks = books.slice(FirstBook, LastBook);
-
-  console.log("cnnnnn=========>", currentBooks);
+  const LBook = currentPage * perPage;
+  const FBook = LBook - perPage;
+  const currentBooks = books.slice(FBook, LBook);
 
   return (
     <>
@@ -110,7 +106,7 @@ export default function Dashboard() {
               <option value="dsec" >Price: high to low</option>
               <option value="asec"  >Price: low to high</option>
               <option value="alp-asec" >Sort By: (A-Z)</option>
-              <option value="alp-dsec"  >Sort By: (Z-A)</option>
+              {/* <option value="alp-dsec"  >Sort By: (Z-A)</option> */}
             </select>
           </div>
         </div>

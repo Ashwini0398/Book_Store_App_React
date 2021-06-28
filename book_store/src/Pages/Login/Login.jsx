@@ -51,6 +51,10 @@ export default class Login extends Component {
         },()=>console.log(this.state.passwordError ," ",this.state.password));
     }
 
+    forgetPassword=()=>{
+        this.setState({redirect: "/ForgetPassword"});   
+    }
+
     Login = () =>{
         this.setState({
             uNameError : !this.validationTest(UserNameRegex, this.state.uName) ,
@@ -67,8 +71,9 @@ export default class Login extends Component {
                 };
 
                 user_services.login(userData).then((data) =>{
-                    console.log('data after register',data);
+                    console.log('data after login',data);
                     localStorage.setItem('token', data.data.result.accessToken);
+                    localStorage.setItem('first',userData.email );
                     
                     this.setState({
                         redirect:"/Dashboard",
@@ -127,7 +132,7 @@ export default class Login extends Component {
                                  FormHelperTextProps={{ style: styles.helperText }}
                             />
                             <div className="pwdchange">
-                                <span className="forget">Forget Password?</span>
+                                <span className="forget" onClick={this.forgetPassword}>Forget Password?</span>
                             </div>
 
                         </div>

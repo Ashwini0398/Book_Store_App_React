@@ -116,12 +116,23 @@ export default function SimpleCard(props) {
     let Data = {
       isCart: true
     }
-
     user_services.addToCart(value._id, Data).then((data) => {
       console.log(data);
       props.getCard();
-      ButtonClick(value.bookName);
+      // ButtonClick(value.bookName);
+    }).catch(error => {
+      console.log("error", error);
+    })
+  }
 
+  const  wishListToCart =(value) =>{
+    let Data = {
+      isCart: true
+    }
+    user_services.addToWishList(value._id, Data).then((data) => {
+      console.log("wishlist ",data);
+      props.getCard();
+      // ButtonClick(value.bookName);
     }).catch(error => {
       console.log("error", error);
     })
@@ -152,19 +163,21 @@ export default function SimpleCard(props) {
       </CardActions>
       <div className={classes.buttonCard} onClick={ButtonClick}>
         {displayCart ?
-          <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
-            ADD TO BAG
-          </Button>
-          :
           <>
-            <Button variant="contained" color="secondary" id={props.value._id} className={classes.btn1Card} onClick={() => addToCart(props.value)} >
+            <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
               ADD TO BAG
             </Button>
-            <Button variant="contained" color="secondary" className={classes.btn2Card}>
-              &#10084; WISHLIST
-            </Button>
+            
           </>
-
+            :
+            <>
+              <Button variant="contained" color="secondary" id={props.value._id} className={classes.btn1Card} onClick={() => addToCart(props.value)} >
+                ADD TO BAG
+              </Button>
+              <Button variant="contained" color="secondary" className={classes.btn2Card}  onClick={() => wishListToCart(props.value)} >
+                &#10084; WISHLIST
+              </Button>
+            </>
 
         }
 

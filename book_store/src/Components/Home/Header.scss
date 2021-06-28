@@ -26,13 +26,16 @@
 .profile{
     @include icon(flex,column,null)
 }
+.profile-icon{
+    @include icon(flex,null,center)
+}
 .cart{
     @include icon(flex,column,null);
     cursor: pointer;
 }
 .side-header{
-    width: 200px;
-    margin-left: 190px;
+    width: 268px;
+    // margin-left: 190px;
     @include icon(flex,null,space-around)
 
 }

@@ -9,11 +9,7 @@
 
 $border: 1px solid #d9cccc;
 .CartBag-frame {
-    margin-top: 100px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @include flex(flex,center ,column ,null ,100% ,100px );
     align-items: center;
 }
 .header-detail {

@@ -22,6 +22,11 @@ class UserService{
         return this.axios_service.post(url,data);
     }
 
+    addToWishList(id,data){
+        let url = baseURL+`user/add_wish_list/${id}`;
+        return this.axios_service.post(url,data);
+    }
+
     OrderSucces(id,data){
         let url = baseURL+`user/add_cart_item/${id}`;
         return this.axios_service.post(url,data);
@@ -31,9 +36,19 @@ class UserService{
         let url = baseURL+`user/get_cart_items`;
         return this.axios_service.get(url);
     }
+
+    getWishlist(){
+        let url = baseURL+`user/get_wishlist_items`;
+        return this.axios_service.get(url);
+    }
     
-    deleteItem(data){
+    deleteCartItem(data){
         let url = baseURL+`user/remove_cart_item/${data}`;
+        return this.axios_service.delete(url);
+    }
+
+    deleteWishlistItem(data){
+        let url = baseURL+`user/remove_wishlist_item/${data}`;
         return this.axios_service.delete(url);
     }
    
@@ -58,6 +73,11 @@ class UserService{
         console.log(localStorage.getItem('usertoken'));
         let url = baseURL+`user/add/order`;
         return this.axios_service.post(url,data); 
+    }
+
+    forgetpassword =(data)=>{
+        let url = baseURL+'user/reset';
+        return this.axios_service.post(url,data);
     }
 }
 export default new UserService();

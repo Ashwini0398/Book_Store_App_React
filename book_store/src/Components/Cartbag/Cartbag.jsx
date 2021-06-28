@@ -165,11 +165,26 @@ export default class Cartbag extends Component {
         };
         user_services.orderItem(data).then((res) => {
             console.log(res);
+            for(let i=0;i<this.state.book.length;i++){
+                this.removeItem(this.state.book[i]._id)
+            }
             this.setState({ redirect: "/orderSucess" });
         }).catch((err) => {
             console.log(err);
         })
        
+    }
+    
+    removeItem = (e) => {
+
+        console.log("id ", e);
+        user_services. deleteCartItem(e).then((data) => {
+            console.log(data);
+            this.getCartItem();
+        }).catch(error => {
+            console.log("error", error);
+        })
+
     }
 
     render() {
@@ -195,10 +210,7 @@ export default class Cartbag extends Component {
                     <div className="title">Home/My Cart</div>
                     <div className="cartBag-content">
                         <div >My Cart ({this.state.book.length})</div>
-                        <CartDetails val={this.state.book} get={this.getCartItem} send={(Data) => {
-                            this.sendCount(Data);
-                            { { console.log("CartCount", this.state.cartCount) } }
-                        }} />
+                        <CartDetails val={this.state.book} get={this.getCartItem}  />
                         <div className="btn-content">
                             <Button variant="contained" className="btn-place" onClick={this.handleClick} >
                                 Place Order
@@ -401,8 +413,6 @@ export default class Cartbag extends Component {
                                 )
                             })
                             } </>
-
-
                         </div>
                         :
                         <div className="order-frame" >

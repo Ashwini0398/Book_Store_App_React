@@ -10,7 +10,7 @@ const CartDetails = (props) => {
         // e.stopPropagation();
 
         console.log("id ", e);
-        user_services.deleteItem(e).then((data) => {
+        user_services.deleteCartItem(e).then((data) => {
             console.log(data);
             props.get();
         }).catch(error => {
@@ -24,25 +24,34 @@ const CartDetails = (props) => {
         let data = {
             "quantityToBuy": quantity + 1
         }
-        console.log(data, productid);
-        user_services.cartQuantity(data, productid).then((res) => {
-            console.log(res);
-            props.get();
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (data.quantityToBuy > 10) {
+            console.log("quantity is full");
+        }
+        else {
+            // console.log(data, productid);
+            user_services.cartQuantity(data, productid).then((res) => {
+                console.log(res);
+                props.get();
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
     const decrease = (productid, quantity) => {
         let data = {
             "quantityToBuy": quantity - 1
         }
-        console.log(data, productid);
-        user_services.cartQuantity(data, productid).then((res) => {
-            console.log(res);
-            props.get();
-        }).catch((err) => {
-            console.log(err);
-        })
+        if (data.quantityToBuy < 1) {
+            console.log("quantity is very less");
+        }
+        else {
+            user_services.cartQuantity(data, productid).then((res) => {
+                console.log(res);
+                props.get();
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
     }
 
     return (

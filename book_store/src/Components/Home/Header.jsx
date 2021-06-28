@@ -12,6 +12,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import Badge from '@material-ui/core/Badge';
 import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
+import Popper from '@material-ui/core/Popper';
 import { useEffect } from 'react';
 import Footer from '../Footer/Footer';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
@@ -21,9 +22,9 @@ import {
     Switch,
     Route,
     Link
-  } from "react-router-dom";
-import {ProtectedRoute} from '../../Services/auth/protectedRoutes';
-import Cartbag from '../Cartbag/Cartbag';  
+} from "react-router-dom";
+import { ProtectedRoute } from '../../Services/auth/protectedRoutes';
+import Cartbag from '../Cartbag/Cartbag';
 
 // import { browserHistory } from 'react-router';
 
@@ -73,74 +74,96 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
+    pop:{
+        zIndex: "10000"
+    },
+    paper: {
+        borderRadius:'3px',
+        maxWidth:'146px',
+        display:'flex',
+        flexDirection:'column',
+        flexFlow:'wrap',
+        backgroundColor:'white'
+      },
+      PopContent:{
+        border: '1px solid grey',
+        width: '100px',
+        cursor:'pointer'
+      }
 }));
 
-export default function Home (props) {
+export default function Home(props) {
     const classes = useStyles();
 
     const [redirect, setRedirect] = React.useState(null);
-    const [cart, setCart] = React.useState([]);
     const [search, setSearch] = React.useState("");
     const [searchData, setSearchData] = React.useState([]);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+  
+    const handleProfile = (event) => {
+        // debugger;
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+    };
+  
+    const open = Boolean(anchorEl);
 
     useEffect(() => {
-      console.log("book data",props.book)
-    },[]);
-    
+        console.log("book data", props.book)
+    }, []);
 
-    const searchBooks =(e)=>{
-        
+
+    const searchBooks = (e) => {
+
         setSearch(e.target.value);
-        
+
         console.log(e.target.value);
-        let newFilter = props.book.filter((val)=>{
-                return val.bookName.indexOf(search) != -1;
+        let newFilter = props.book.filter((val) => {
+            return val.bookName.indexOf(search) != -1;
         });
-     setSearchData(newFilter);
+        // setSearchData(newFilter);
 
-     console.log("filter",newFilter)
+        console.log("filter", newFilter)
 
-        
+
     }
 
-    const redirectTo=()=>{
+    const redirectTo = () => {
         console.log("hellloooooo")
         setRedirect("/CartBag");
     }
 
     if (redirect) {
         return <Redirect to={{
-          pathname: redirect,
-          state: { referrer: cart }
+            pathname: redirect
         }} />
-        
-      }
-      else {
+
+    }
+    else {
         return (
             <>
                 <div className="root">
                     <AppBar className="app-header" position="fixed">
                         <Toolbar>
-                        <Link style={{textDecoration:"none"}} to={'/Dashboard'} >
-                            <div className="header-title">
-                                <img className="img" src={book} alt="hii" />
-                                <div className="text">Bookstore</div>
-                            </div>
-                        </Link>
+                            <Link style={{ textDecoration: "none" }} to={'/Dashboard'} >
+                                <div className="header-title">
+                                    <img className="img" src={book} alt="hii" />
+                                    <div className="text">Bookstore</div>
+                                </div>
+                            </Link>
                             <div className="search-bar">
                                 <div className={classes.search}>
                                     <div className={classes.searchIcon}>
                                         <SearchIcon />
                                     </div>
-                                    <InputBase 
+                                    <InputBase
                                         style={{ color: 'grey' }}
                                         placeholder="Search…"
                                         value={search}
-                                        onChange={(e)=>searchBooks(e)}
+                                        onChange={(e) => searchBooks(e)}
                                         classes={{
                                             root: classes.inputRoot,
                                             input: classes.inputInput,
-                                           
+
                                         }}
                                         inputProps={{ 'aria-label': 'search' }}
                                     />
@@ -148,15 +171,25 @@ export default function Home (props) {
                             </div>
                             <div className="side-header">
                                 <div className="profile">
-                                    <PersonOutlineIcon />
-                                    <span>Profile</span>
+                                   <div className="profile-icon"> <PersonOutlineIcon onClick={handleProfile}/></div>
+                                    <span>{localStorage.getItem('first')}</span>
+                                    <Popper className={classes.pop} open={open} anchorEl={anchorEl} placement={'bottom-start'} transition>
+                                        <div className={classes.paper}>
+                                            <div className={classes.PopContent} onClick={()=>setRedirect("/WishList")}>
+                                                WishList
+                                            </div>
+                                            <div className={classes.PopContent} onClick={()=>setRedirect("/")}>
+                                                Logout
+                                            </div>
+                                        </div>
+                                    </Popper>
                                 </div>
                                 <div className="cart" >
-                                
-                                    <Badge badgeContent={props.val} color="primary" onClick={()=>redirectTo()}>
+
+                                    <Badge badgeContent={props.val} color="primary" onClick={() => redirectTo()}>
                                         <ShoppingCartIcon />
                                     </Badge>
-                               
+
                                     <span>Cart</span>
                                 </div>
                             </div>
