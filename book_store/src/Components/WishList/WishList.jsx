@@ -102,7 +102,7 @@ export default class WishList extends Component {
                 <div className="CartBag-frame1">
                     <div className="title1">Home/My Wishlist</div>
                     <div className="cartBag-content1">
-                        <div className="heading-wishlist">My Whislist </div>
+                        <div className="heading-wishlist">My Whislist({this.state.notes.length}) </div>
 
                         {this.state.notes.map((value, index) =>
                             <div className="main-cart1">

@@ -20,12 +20,14 @@ export default function Dashboard() {
   const [cart, setCart] = React.useState([]);
   const [perPage, setPerPage] = React.useState("8");
   const [currentPage, setCurrentPage] = React.useState("1");
-  const [search,searchBook] = React.useState("");
+  const [search, setSearchBook] = React.useState("");
+  const [searchData, setSearchData] = React.useState([]);
+
 
   useEffect(() => {
     getAllBooks();
     getCartItem();
-  }, []);
+  },[],search);
 
 
   const getAllBooks = () => {
@@ -82,6 +84,33 @@ export default function Dashboard() {
 
   }
 
+  const searchBooks = (e) => {
+    setSearchBook(e.target.value);
+    console.log(e.target.value);
+    let filterBooks = books;
+    filterBooks = books.filter((val) => {
+      //return val.bookName.indexOf(e.target.value) != 1;
+      console.log("value---------->",val);
+       return val.description.toLowerCase().includes(e.target.value)
+              ||val.author.toLowerCase().includes(e.target.value)
+              ||val.bookName.toLowerCase().includes(e.target.value)
+              ||val.description.toUpperCase().includes(e.target.value)
+              ||val.author.toUpperCase().includes(e.target.value)
+              ||val.bookName.toUpperCase().includes(e.target.value)
+              ||val.description.includes(e.target.value)
+              ||val.author.includes(e.target.value)
+              ||val.bookName.includes(e.target.value)
+        })
+    if (e.target.value === ""){
+      setSearchData(filterBooks);
+      console.log( "aaaa",setSearchData(filterBooks))
+  }
+  else{
+    setSearchData(books)
+    console.log("search data", setSearchData(filterBooks))
+  }
+}
+
   const booksDetails = (book) => {
     return (<Card value={book} get={getAllBooks} getCard={getCartItem} />)
   }
@@ -93,12 +122,18 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header book={books} val={cart.length} />
+      <Header book={books} val={cart.length} search={searchBooks} />
       <div>
         <div className="disp-sort">
           <div className="disp-title">
             <span className="books-show">Books</span>
-            <span>({currentBooks.length}items)</span>
+            <span>(
+            { search === "" ? (
+                        currentBooks.length 
+
+                    ) : (
+                      searchData.length
+                    )})Item</span>
           </div>
           <div>
             <select style={{ width: '157px', height: '47px' }} onChange={(e) => sort(e)} >
@@ -111,11 +146,15 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="disp-books">
-          {currentBooks.map(booksDetails)}
+          { search === "" ? (
+                        currentBooks.map(booksDetails)
+
+                    ) : (
+                      searchData.map(booksDetails)
+                    )}
         </div>
         <div className="paginationBlock">
           <Paginations
-
             count={Math.floor(books.length / perPage + 1)}
             variant="outlined"
             shape="rounded"

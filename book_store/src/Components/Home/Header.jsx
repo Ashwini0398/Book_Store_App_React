@@ -74,37 +74,38 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
-    pop:{
+    pop: {
         zIndex: "10000"
     },
     paper: {
-        borderRadius:'3px',
-        maxWidth:'146px',
-        display:'flex',
-        flexDirection:'column',
-        flexFlow:'wrap',
-        backgroundColor:'white'
-      },
-      PopContent:{
+        borderRadius: '3px',
+        maxWidth: '146px',
+        display: 'flex',
+        flexDirection: 'column',
+        flexFlow: 'wrap',
+        backgroundColor: 'white'
+    },
+    PopContent: {
         border: '1px solid grey',
         width: '100px',
-        cursor:'pointer'
-      }
+        cursor: 'pointer'
+    }
 }));
 
 export default function Home(props) {
     const classes = useStyles();
 
     const [redirect, setRedirect] = React.useState(null);
+    const [searchOpen, setSearchOpen] = React.useState(false);
     const [search, setSearch] = React.useState("");
     const [searchData, setSearchData] = React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
-  
+
     const handleProfile = (event) => {
         // debugger;
-      setAnchorEl(anchorEl ? null : event.currentTarget);
+        setAnchorEl(anchorEl ? null : event.currentTarget);
     };
-  
+
     const open = Boolean(anchorEl);
 
     useEffect(() => {
@@ -113,18 +114,11 @@ export default function Home(props) {
 
 
     const searchBooks = (e) => {
+        props.search(e)
+    }
 
-        setSearch(e.target.value);
-
-        console.log(e.target.value);
-        let newFilter = props.book.filter((val) => {
-            return val.bookName.indexOf(search) != -1;
-        });
-        // setSearchData(newFilter);
-
-        console.log("filter", newFilter)
-
-
+    const handleSearch = () => {
+        setSearchOpen(false);
     }
 
     const redirectTo = () => {
@@ -155,30 +149,44 @@ export default function Home(props) {
                                     <div className={classes.searchIcon}>
                                         <SearchIcon />
                                     </div>
+                                    <div>
                                     <InputBase
-                                        style={{ color: 'grey' }}
-                                        placeholder="Search…"
-                                        value={search}
-                                        onChange={(e) => searchBooks(e)}
-                                        classes={{
-                                            root: classes.inputRoot,
-                                            input: classes.inputInput,
-
-                                        }}
+                                        className="search2"
+                                        onChange={e => searchBooks(e)}
+                                        placeholder="Search"
                                         inputProps={{ 'aria-label': 'search' }}
                                     />
+                                
+                                {/* //     <div>
+                                //     <InputBase
+                                //         className="searchBook"
+                                //         onChange={e => searchBooks(e)}
+                                //         placeholder="Search"
+                                //         inputProps={{ 'aria-label': 'search' }}
+                                //     />
+                                //     <div className="menulist3">
+                                //                     {search}
+                                //     </div>
+                                // </div>
+
+                                // } */}
+
+
+                            </div>
+
                                 </div>
+
                             </div>
                             <div className="side-header">
                                 <div className="profile">
-                                   <div className="profile-icon"> <PersonOutlineIcon onClick={handleProfile}/></div>
+                                    <div className="profile-icon"> <PersonOutlineIcon onClick={handleProfile} /></div>
                                     <span>{localStorage.getItem('first')}</span>
                                     <Popper className={classes.pop} open={open} anchorEl={anchorEl} placement={'bottom-start'} transition>
                                         <div className={classes.paper}>
-                                            <div className={classes.PopContent} onClick={()=>setRedirect("/WishList")}>
+                                            <div className={classes.PopContent} onClick={() => setRedirect("/WishList")}>
                                                 WishList
                                             </div>
-                                            <div className={classes.PopContent} onClick={()=>setRedirect("/")}>
+                                            <div className={classes.PopContent} onClick={() => setRedirect("/")}>
                                                 Logout
                                             </div>
                                         </div>
