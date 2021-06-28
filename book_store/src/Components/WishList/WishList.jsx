@@ -61,7 +61,7 @@ export default class WishList extends Component {
     }
 
 
-    handleCart = (value) => {
+    moveToCart = (value) => {
         
     let Data = {
         isCart: true
@@ -120,7 +120,7 @@ export default class WishList extends Component {
                                         {/* <div className="remove" >Remove</div> */}
                                     </div>
                                     <div className="btn-content1"> 
-                                        <Button variant="contained" className="btn-place1" onClick={()=>this.handleCart(value.product_id._id)} >
+                                        <Button variant="contained" className="btn-place1" onClick={()=>this.moveToCart(value.product_id._id)} >
                                            <span className="btn-move"> Move to cart </span>
                                         </Button>
                                     </div>
