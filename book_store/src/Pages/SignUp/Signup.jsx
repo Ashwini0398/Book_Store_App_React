@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import '../../Pages/Login/Login.scss';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import user_services from '../../Services/user_services';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 
 let NameRegex = RegExp('^[A-Z]{1}[a-z]{2,}$');
 let UserNameRegex = RegExp("^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$");
@@ -17,18 +21,19 @@ class Signup extends Component {
             fName: '',
             uName: '',
             password: '',
-            mobileno:'',
+            mobileno: '',
             fNameError: false,
             uNameError: false,
             passwordError: false,
-            mobilenoError:false,
-            redirect:'',
-            flag:0,
+            mobilenoError: false,
+            redirect: '',
+            flag: 0,
+            open: false
         }
     }
-    
+
     validationTest = (test, val) => {
-        
+
         if (test.test(val)) {
             console.log("Value", val);
             console.log("test result", test.test(val));
@@ -42,43 +47,44 @@ class Signup extends Component {
 
     onFNameChange = e => {
         this.setState({
-            fName : e.target.value,
-            flag:1
-        },console.log(this.state.fName));
+            fName: e.target.value,
+            flag: 1
+        }, console.log(this.state.fName));
     }
 
     onUserChange = e => {
         this.setState({
-            uName : e.target.value,
-            flag:1,
-        },console.log(this.state.uName));
+            uName: e.target.value,
+            flag: 1,
+        }, console.log(this.state.uName));
     }
 
     onPasswordChange = e => {
         this.setState({
-            password : e.target.value,
-            flag:1,
-        },console.log(this.state.password));
+            password: e.target.value,
+            flag: 1,
+        }, console.log(this.state.password));
 
     }
-    onMobileChange =e =>{
+    onMobileChange = e => {
         this.setState({
-            mobileno : e.target.value,
-            flag:1,
-        },console.log(this.state.mobileno ));
+            mobileno: e.target.value,
+            flag: 1,
+        }, console.log(this.state.mobileno));
     }
 
-    signup=()=>{
+    signup = () => {
+        
         this.setState({
-            fNameError : !this.validationTest(NameRegex, this.state.fName),
-            uNameError : !this.validationTest(UserNameRegex, this.state.uName),
-            passwordError : !this.validationTest(passwordRegex, this.state.password) ,
-            mobilenoError:!this.validationTest(mobilenoRegex, this.state.mobileno) ,
+            fNameError: !this.validationTest(NameRegex, this.state.fName),
+            uNameError: !this.validationTest(UserNameRegex, this.state.uName),
+            passwordError: !this.validationTest(passwordRegex, this.state.password),
+            mobilenoError: !this.validationTest(mobilenoRegex, this.state.mobileno),
         });
-        if (this.state.flag === 1 
-            && !this.state.fNameError 
-            && !this.state.uNameError 
-            && !this.state.passwordError 
+        if (this.state.flag === 1
+            && !this.state.fNameError
+            && !this.state.uNameError
+            && !this.state.passwordError
             && !this.state.mobilenoError) {
             {
                 console.log("validation successfull");
@@ -89,24 +95,32 @@ class Signup extends Component {
                     phone: this.state.mobileno,
                     // service: 'advance',
                 };
-
-                user_services.register(userData).then((data) =>{
-                    console.log('data after register',data);
+                this.setState({ open: true })
+                user_services.register(userData).then((data) => {
+                   
+                    console.log('data after register', data);
                     this.setState({
-                        redirect:"/Login",
+                        redirect: "/",
                     })
                 })
-                .catch(error=>{
-                    console.log('Error',error);
-                });
+                    .catch(error => {
+                        console.log('Error', error);
+                    });
             }
+        }
     }
-}
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
 
+        this.setState({ open: false });
+
+    }
 
     render() {
-        if(this.state.redirect){
-            return <Redirect to ={this.state.redirect}/>
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
         }
         let styles = {
             helperText: {
@@ -146,7 +160,7 @@ class Signup extends Component {
                                 FormHelperTextProps={{ style: styles.helperText }}
                             />
                             <TextField
-                                 error={this.state.passwordError}
+                                error={this.state.passwordError}
                                 id="password"
                                 type="password"
                                 name="password"
@@ -172,9 +186,29 @@ class Signup extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button1" variant="contained"  onClick={this.signup}>
+                            <Button className="button1" variant="contained" onClick={this.signup}>
                                 Signup
                             </Button>
+                            <Snackbar
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                open={this.state.open}
+                                autoHideDuration={6000}
+                                onClose={this.handleClose}
+                                message=" SIGN IN SUCESSFUL "
+                                action={
+                                    <React.Fragment>
+                                        <Button color="secondary" size="small" onClick={this.handleClose}>
+                                            UNDO
+                                        </Button>
+                                        <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                                            <CloseIcon fontSize="small" />
+                                        </IconButton>
+                                    </React.Fragment>
+                                }
+                            />
                         </div>
 
                     </form>

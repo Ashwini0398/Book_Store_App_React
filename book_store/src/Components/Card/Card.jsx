@@ -4,22 +4,16 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import Fade from '@material-ui/core/Fade';
 import Image from '../../Assets/Image.png';
-import { ProtectedRoute } from '../../Services/auth/protectedRoutes';
-import Cart from "../../Components/Cart/Cart";
-import { width } from '@material-ui/system';
-import { Redirect } from 'react-router';
 import user_services from "../../Services/user_services";
-import Popper from '@material-ui/core/Popper';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import {
-  Switch,
-  Link,
-  Route
-} from "react-router-dom";
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: 230,
     minHeight: 260,
@@ -129,8 +123,12 @@ const useStyles = makeStyles({
     height: '300px',
     border: '1px solid gray',
     background: 'aliceblue'
-  }
-});
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: 'black',
+  },
+}));
 
 export default function SimpleCard(props) {
   const classes = useStyles();
@@ -140,55 +138,55 @@ export default function SimpleCard(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [abcd, abcdSet] = React.useState(false);
   const [openButton, setOpenButton] = React.useState(true);
-
-
-
-  const handleDescriptionOpen = (e) => {
-    // debugger;
-    e.stopPropagation();
-    setAnchorEl(true);
-    abcdSet(true);
-  };
-
-  const handleDescriptionClose = (e) => {
-    // debugger;
-    e.stopPropagation();
-    setAnchorEl(null);
-    abcdSet(false);
-  };
-
+  const [state, setState] = React.useState(false);
+  
   const ButtonClick = () => {
     setDisplayCart(true);
-    setOpenButton(false);
+    setOpenButton(true);
   }
+
+ 
 
   const addToCart = (value) => {
 
+      setState(true);
     let Data = {
       isCart: true
     }
     user_services.addToCart(value._id, Data).then((data) => {
-      console.log(data);
+
+      console.log("add to cart ", data);
       props.getCard();
+      setDisplayCart(true);
+
+
       // ButtonClick(value.bookName);
     }).catch(error => {
       console.log("error", error);
     })
   }
 
-  const wishListToCart = (value) => {
+  const handleClose = () => {
+    setState(false);
+  };
+ 
+  const wishListToCart = (value, Transition) => {
+
+    setState(true);
     let Data = {
       isCart: true
     }
     user_services.addToWishList(value._id, Data).then((data) => {
       console.log("wishlist ", data);
       props.getCard();
-      // ButtonClick(value.bookName);
+      setOpenButton(false)
+      
     }).catch(error => {
       console.log("error", error);
     })
   }
 
+ 
 
   const descriptionshow = (e) => {
     e.stopPropagation();
@@ -198,6 +196,9 @@ export default function SimpleCard(props) {
     e.stopPropagation();
     setOpen(false);
   }
+
+
+
 
 
   return (
@@ -219,30 +220,33 @@ export default function SimpleCard(props) {
         </CardActions>
         <div className={classes.buttonCard} onClick={ButtonClick}>
           {openButton
-           ?
-              <div>
-                {displayCart ?
+            ?
+            <>
+              {displayCart ?
                 <>
-                  <Button variant="contained" fullwidth  className={classes.btn3Card}  >
+                  <Button variant="contained" fullwidth className={classes.btn3Card}  >
                     ADD TO BAG
                   </Button>
 
                 </>
                 :
                 <>
-                  <Button variant="contained"  id={props.value._id} className={classes.btn1Card} onClick={() => addToCart(props.value)} >
+                  <Button variant="contained" id={props.value._id} className={classes.btn1Card} onClick={() => { addToCart(props.value) }} >
                     ADD TO BAG
                   </Button>
-                  <Button variant="contained"  className={classes.btn2Card} onClick={() => wishListToCart(props.value)} >
+                 
+
+                  <Button variant="contained" className={classes.btn2Card} onClick={() => wishListToCart(props.value)} >
                     &#10084; WISHLIST
                   </Button>
+                
                 </>
 
               }
-            </div>
+            </>
             :
             <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
-              WishList 
+              WishList
             </Button>
 
           }
@@ -250,6 +254,7 @@ export default function SimpleCard(props) {
         </div>
 
       </Card>
+      
       {/* <div className={classes.descriptionFrame}>
       {props.value.description}
       </div> */}

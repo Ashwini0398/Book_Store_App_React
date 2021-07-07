@@ -13,13 +13,25 @@ import { Redirect } from 'react-router';
 import user_services from "../../Services/user_services";
 import Image from '../../Assets/Image.png';
 import CartDetails from './CartDetails';
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
 
 let Regex = RegExp('^[A-Z]{1}[a-z]{2,}$');
 let MobilenoRegex = RegExp('/^[6-9]{1}[0-9]{9}$/');
 let PinCodeREgex = RegExp('[1-9]{1}[0-9]{5}|[1-9]{1}[0-9]{3}\\s[0-9]{3}');
 
-export default class Cartbag extends Component {
+
+
+const styles = (theme) => ({
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: 'black',
+      },
+});
+
+
+ class Cartbag extends Component {
     _isMounted = false;
 
 
@@ -48,6 +60,7 @@ export default class Cartbag extends Component {
             details: [false],
             redirect: '',
             cartCount: [],
+            openBackDrop: false
 
         }
 
@@ -74,15 +87,15 @@ export default class Cartbag extends Component {
         }
     }
 
-    
+
     change = (e) => {
 
         this.setState({
-            [e.target.name]:e.target.value,
+            [e.target.name]: e.target.value,
             flag: 1,
         });
     }
-    
+
 
 
     handleContinue = () => {
@@ -116,14 +129,14 @@ export default class Cartbag extends Component {
                 }
                 user_services.customerDetails(userData).then((data) => {
                     console.log('data customeer details', data);
-                    this.setState({ openCon: true});
+                    this.setState({ openCon: true });
 
 
                 })
                     .catch(error => {
                         console.log('Error', error);
                     });
-               
+
             }
         }
     }
@@ -149,6 +162,7 @@ export default class Cartbag extends Component {
     }
 
     OrderPlaced = () => {
+        this.setState({ openBackDrop: true });
         let orderDetails = [];
         this.state.book.map((val) => {
             let arr = {
@@ -163,22 +177,29 @@ export default class Cartbag extends Component {
         let data = {
             orders: orderDetails,
         };
+        console.log("DATA ORDER SUCCES", data);
+        
         user_services.orderItem(data).then((res) => {
+            
             console.log(res);
-            for(let i=0;i<this.state.book.length;i++){
+            for (let i = 0; i < this.state.book.length; i++) {
                 this.removeItem(this.state.book[i]._id)
             }
+
             this.setState({ redirect: "/orderSucess" });
         }).catch((err) => {
             console.log(err);
         })
-       
+
     }
-    
+     handleClose = () =>{
+        this.setState({ openBackDrop: false });
+    }
+
     removeItem = (e) => {
 
         console.log("id ", e);
-        user_services. deleteCartItem(e).then((data) => {
+        user_services.deleteCartItem(e).then((data) => {
             console.log(data);
             this.getCartItem();
         }).catch(error => {
@@ -188,10 +209,13 @@ export default class Cartbag extends Component {
     }
 
     render() {
-        console.log("book id ",this.state.book)
+        const { classes } = this.props;
+        console.log("book id ", this.state.book)
         if (this.state.redirect) {
-            return <Redirect to={{pathname: this.state.redirect,
-                state: { details: this.state.book}}} />
+            return <Redirect to={{
+                pathname: this.state.redirect,
+                state: { details: this.state.book }
+            }} />
         }
         let styles = {
             helperText: {
@@ -210,7 +234,7 @@ export default class Cartbag extends Component {
                     <div className="title">Home/My Cart</div>
                     <div className="cartBag-content">
                         <div >My Cart ({this.state.book.length})</div>
-                        <CartDetails val={this.state.book} get={this.getCartItem}  />
+                        <CartDetails val={this.state.book} get={this.getCartItem} />
                         <div className="btn-content">
                             <Button variant="contained" className="btn-place" onClick={this.handleClick} >
                                 Place Order
@@ -390,25 +414,30 @@ export default class Cartbag extends Component {
                             <>{this.state.book.map((value, index) => {
                                 return (
                                     <div>
-                                    <div className="main-cart">
-                                        <div>
-                                            <img className="img-book" src={Image} alt="lll" />
-                                        </div>
-                                        <div className="text-content">
-                                            <div className="bag-text">
-                                                <div className="cart-title">{value.product_id.bookName}</div>
-                                                <div className="cart-bookAuthor">by {value.product_id.author}</div>
-                                                <div className="price">Rs.{value.product_id.price}</div>
+                                        <div className="main-cart">
+                                            <div>
+                                                <img className="img-book" src={Image} alt="lll" />
                                             </div>
-                                        </div>
+                                            <div className="text-content">
+                                                <div className="bag-text">
+                                                    <div className="cart-title">{value.product_id.bookName}</div>
+                                                    <div className="cart-bookAuthor">by {value.product_id.author}</div>
+                                                    <div className="price">Rs.{value.product_id.price}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         {this.state.book.length - 1 == index ?
                                             <div className="btn-content">
                                                 <Button variant="contained" className="btn-place" onClick={this.OrderPlaced} >
                                                     Checkout
                                                 </Button>
+                                                <Backdrop className={classes.backdrop} open={this.state.openBackDrop} onClick={this.handleClose}>
+                                                    <CircularProgress color="inherit" />
+                                                </Backdrop>
+
                                             </div> : null}
-                                 </div> 
+                                    </div>
+
 
                                 )
                             })
@@ -420,9 +449,10 @@ export default class Cartbag extends Component {
                         </div>
                     }
                 </div>
-                <Footer />
+                <div className="footer-content"> <Footer /></div>
             </div >
         );
     }
 }
 
+export default withStyles(styles)(Cartbag);

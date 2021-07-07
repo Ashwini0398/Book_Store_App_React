@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import './Login.scss';
 import Button from '@material-ui/core/Button';
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import user_services from '../../Services/user_services';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 let UserNameRegex = /^([a-zA-Z0-9]*[+._-]*[a-zA-Z0-9]+@[a-zA-Z]+.{3}[a-zA-z.]*[a-zA-z]{2})+$/;
 let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/;
@@ -16,15 +19,16 @@ export default class Login extends Component {
             password: '',
             uNameError: false,
             passwordError: false,
-            redirect:'',
-            flag:0
+            redirect: '',
+            flag: 0,
+            open:false
         }
-       
+
     }
 
 
     validationTest = (test, val) => {
-        
+
         if (test.test(val)) {
             console.log("Value", val);
             console.log("test result", test.test(val));
@@ -38,60 +42,66 @@ export default class Login extends Component {
 
     onUserChange = e => {
         this.setState({
-            uName : e.target.value,
-            flag:1,
-        },()=>console.log(this.state.uName));
+            uName: e.target.value,
+            flag: 1,
+        }, () => console.log(this.state.uName));
     }
 
 
     onPasswordChange = e => {
         this.setState({
-            password : e.target.value,
-            flag:1,
-        },()=>console.log(this.state.passwordError ," ",this.state.password));
+            password: e.target.value,
+            flag: 1,
+        }, () => console.log(this.state.passwordError, " ", this.state.password));
     }
 
-    forgetPassword=()=>{
-        this.setState({redirect: "/ForgetPassword"});   
+    forgetPassword = () => {
+        this.setState({ redirect: "/ForgetPassword" });
     }
 
-    Login = () =>{
+    Login = () => {
+        this.setState({open : true});
         this.setState({
-            uNameError : !this.validationTest(UserNameRegex, this.state.uName) ,
-            passwordError : !this.validationTest(passwordRegex, this.state.password) 
+            uNameError: !this.validationTest(UserNameRegex, this.state.uName),
+            passwordError: !this.validationTest(passwordRegex, this.state.password)
         });
-       
-        if (this.state.flag === 1 
-            && !this.state.uNameError 
-            && !this.state.passwordError ) {
-            
-                let userData = {
-                    email: this.state.uName,
-                    password: this.state.password
-                };
 
-                user_services.login(userData).then((data) =>{
-                    console.log('data after login',data);
-                    localStorage.setItem('token', data.data.result.accessToken);
-                    localStorage.setItem('first',userData.email );
-                    
-                    this.setState({
-                        redirect:"/Dashboard",
-                    })
+        if (this.state.flag === 1
+            && !this.state.uNameError
+            && !this.state.passwordError) {
+
+            let userData = {
+                email: this.state.uName,
+                password: this.state.password
+            };
+
+            user_services.login(userData).then((data) => {
+                
+                console.log('data after login', data);
+                localStorage.setItem('token', data.data.result.accessToken);
+                localStorage.setItem('first', userData.email);
+
+                this.setState({
+                    redirect: "/Dashboard",
                 })
-                .catch(error=>{
-                    console.log('Error',error);
+            })
+                .catch(error => {
+                    console.log('Error', error);
                 });
-        }
-
-        
-
+            }
+    }
+    handleClose = (event, reason) =>{
+        if (reason === 'clickaway') {
+            return;
+          }
+      
+          this.setState({open :false});
 
     }
 
     render() {
-        if(this.state.redirect){
-            return <Redirect to ={this.state.redirect}/>
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
         }
         let styles = {
             helperText: {
@@ -127,9 +137,9 @@ export default class Login extends Component {
                                 label="Password"
                                 variant="outlined"
                                 size="small"
-                                onChange={e => this.onPasswordChange(e)} 
+                                onChange={e => this.onPasswordChange(e)}
                                 helperText={this.state.passwordError ? "Enter Password" : ''}
-                                 FormHelperTextProps={{ style: styles.helperText }}
+                                FormHelperTextProps={{ style: styles.helperText }}
                             />
                             <div className="pwdchange">
                                 <span className="forget" onClick={this.forgetPassword}>Forget Password?</span>
@@ -137,12 +147,32 @@ export default class Login extends Component {
 
                         </div>
                         <div className="div-but-content">
-                            <Button className="button1" variant="contained"  onClick={this.Login}>
+                            <Button className="button1" variant="contained" onClick={this.Login}>
                                 Login
                             </Button>
+                            <Snackbar
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                open={this.state.open}
+                                autoHideDuration={6000}
+                                onClose={this.handleClose}
+                                message=" LOGIN SUCESSFUL "
+                                action={
+                                    <React.Fragment>
+                                        <Button color="secondary" size="small" onClick={this.handleClose}>
+                                            UNDO
+                                        </Button>
+                                        <IconButton size="small" aria-label="close" color="inherit" onClick={this.handleClose}>
+                                            <CloseIcon fontSize="small" />
+                                        </IconButton>
+                                    </React.Fragment>
+                                }
+                            />
                         </div>
 
-                        <span style={{marginTop:'14px'}}>---------- OR ----------</span>
+                        <span style={{ marginTop: '14px' }}>---------- OR ----------</span>
                         <div className="div-buttons">
                             <Button className="button" variant="contained" color="primary">
                                 Facebook

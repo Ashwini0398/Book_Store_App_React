@@ -31,7 +31,7 @@ class Ordersucess extends Component {
         return (
             <div>
                 <Header />
-                {this.props.location.state.details.map((value,index )=>
+             
                     
                 <div className="Conatiner-last">
                     <div className="Lastimg">
@@ -40,9 +40,11 @@ class Ordersucess extends Component {
                     <div className="Last-Text">
                         hurray!!!! your order is confirmed
                         </div>
+                        {this.props.location.state.details.map((value,index )=>
                     <div className="Last-Text">
                         the order id is {value._id}
                         </div>
+                     )}
                     <div className="Last-Text">
                         save the order id for
                         </div>
@@ -70,7 +72,7 @@ class Ordersucess extends Component {
                     </div>
 
                 </div>
-                )}
+               
                 <Footer />
             </div>
         );

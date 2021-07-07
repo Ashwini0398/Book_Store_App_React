@@ -21,7 +21,7 @@ $border: 1px solid #d9cccc;
 }
 .cartBag-content {
     width: 78%;
-    min-height: 292px;
+    min-height: 100px;
     border: $border;
     padding: 20px;
     margin-top: 20px;
@@ -187,5 +187,14 @@ $border: 1px solid #d9cccc;
     }
     .title {
         width: 94%;
+    }
+    .address-frame-details{
+        height: 856px;
+    }
+    .custm-content-names{
+        height: 87px;
+    }
+    .city-state{
+        height: 87px;
     }
 }

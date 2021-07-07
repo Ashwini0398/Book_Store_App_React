@@ -155,23 +155,10 @@ export default function Home(props) {
                                         onChange={e => searchBooks(e)}
                                         placeholder="Search"
                                         inputProps={{ 'aria-label': 'search' }}
+                                        className="input-search"
+                                        
                                     />
-                                
-                                {/* //     <div>
-                                //     <InputBase
-                                //         className="searchBook"
-                                //         onChange={e => searchBooks(e)}
-                                //         placeholder="Search"
-                                //         inputProps={{ 'aria-label': 'search' }}
-                                //     />
-                                //     <div className="menulist3">
-                                //                     {search}
-                                //     </div>
-                                // </div>
-
-                                // } */}
-
-
+                               
                             </div>
 
                                 </div>
@@ -180,7 +167,7 @@ export default function Home(props) {
                             <div className="side-header">
                                 <div className="profile">
                                     <div className="profile-icon"> <PersonOutlineIcon onClick={handleProfile} /></div>
-                                    <span>{localStorage.getItem('first')}</span>
+                                    <span className="profile-text">{localStorage.getItem('first')}</span>
                                     <Popper className={classes.pop} open={open} anchorEl={anchorEl} placement={'bottom-start'} transition>
                                         <div className={classes.paper}>
                                             <div className={classes.PopContent} onClick={() => setRedirect("/WishList")}>
