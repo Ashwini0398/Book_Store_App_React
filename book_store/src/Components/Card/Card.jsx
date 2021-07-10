@@ -128,6 +128,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: 'black',
   },
+  
 }));
 
 export default function SimpleCard(props) {
@@ -218,25 +219,39 @@ export default function SimpleCard(props) {
           <div className={classes.bookRating}>4.5 &#9733;</div>
           <div>Rs.{props.value.price}</div>
         </CardActions>
-        <div className={classes.buttonCard} onClick={ButtonClick}>
+        <div className={classes.buttonCard} >
           {openButton
             ?
             <>
               {displayCart ?
                 <>
                   <Button variant="contained" fullwidth className={classes.btn3Card}  >
-                    ADD TO BAG
+                    ADDED TO BAG
                   </Button>
 
                 </>
                 :
                 <>
-                  <Button variant="contained" id={props.value._id} className={classes.btn1Card} onClick={() => { addToCart(props.value) }} >
+                  <Button 
+                    onClick={ButtonClick}
+                    variant="contained" 
+                    id={props.value._id} 
+                    className={classes.btn1Card} 
+                    style={{ display: props.value.quantity > 1 ? 'block' : 'none' }}
+                    onClick={() => { addToCart(props.value) }} >
+                    ADD TO BAG
+                  </Button>
+                  <Button 
+                    variant="contained" 
+                    id={props.value._id} 
+                    className={classes.btn1Card} 
+                    style={{ display: props.value.quantity <= 1 ? 'block' : 'none' }}
+                    disabled>
                     ADD TO BAG
                   </Button>
                  
 
-                  <Button variant="contained" className={classes.btn2Card} onClick={() => wishListToCart(props.value)} >
+                  <Button variant="contained" className={classes.btn2Card} onClick={ButtonClick,() => {wishListToCart(props.value)}}>
                     &#10084; WISHLIST
                   </Button>
                 
@@ -246,7 +261,7 @@ export default function SimpleCard(props) {
             </>
             :
             <Button variant="contained" fullwidth color="secondary" className={classes.btn3Card}  >
-              WishList
+              WishList ADDED
             </Button>
 
           }

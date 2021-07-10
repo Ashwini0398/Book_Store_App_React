@@ -5,9 +5,16 @@
     justify-content: flex-start;
     padding: 21px;
     color: white;
+    width: 214%;
+    padding-left: 94px;
     // width: 900px;
 }
 
+@media only  screen and (max-width: 360px) {
+    .footer-area{
+        width: 78%;
+    }
+}
 @media screen and (max-width: 600px) {
     .footer-area {
        font-size: 11px;

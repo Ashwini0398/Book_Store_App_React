@@ -62,18 +62,18 @@ export default class WishList extends Component {
 
 
     moveToCart = (value) => {
-        
-    let Data = {
-        isCart: true
-      }
-        console.log("product ID" ,value)
+
+        let Data = {
+            isCart: true
+        }
+        console.log("product ID", value)
         user_services.addToCart(value, Data).then((data) => {
-            console.log( "add to wi",data);
+            console.log("add to wi", data);
             this.getCartItem();
             this.delete(value);
-          }).catch(error => {
+        }).catch(error => {
             console.log("error", error);
-          })
+        })
     }
 
     delete(e) {
@@ -95,10 +95,10 @@ export default class WishList extends Component {
 
             return <Redirect to={this.state.redirect} />
         }
-        console.log("bbbbbbbbbbbbbbbbbbb",this.state.notes.length)
+        console.log("bbbbbbbbbbbbbbbbbbb", this.state.notes.length)
         return (
             <div>
-                <Header val={this.state.notes.length}/>
+                <Header val={this.state.notes.length} />
                 <div className="CartBag-frame1">
                     <div className="title1">Home/My Wishlist</div>
                     <div className="cartBag-content1">
@@ -115,18 +115,20 @@ export default class WishList extends Component {
                                         <div className="cart-bookAuthor1">by {value.product_id.author}</div>
                                         <div className="price1">Rs.{value.product_id.price}</div>
                                     </div>
-                                    <div className="delelte-content">
-                                        <div style={{ cursor: "pointer", color: "grey" }} onClick={() => this.delete(value.product_id._id)}><DeleteIcon /></div>
-                                        {/* <div className="remove" >Remove</div> */}
+                                    <div className="Delete-add-Button" style = {{display : 'flex'}}>
+                                        <div className="delelte-content">
+                                            <div style={{ cursor: "pointer", color: "grey" }} onClick={() => this.delete(value.product_id._id)}><DeleteIcon /></div>
+                                            {/* <div className="remove" >Remove</div> */}
+                                        </div>
+                                        <div className="btn-content1">
+                                            <Button variant="contained" className="btn-place1" onClick={() => this.moveToCart(value.product_id._id)} >
+                                                <span className="btn-move"> Move to cart </span>
+                                            </Button>
+                                        </div>
                                     </div>
-                                    <div className="btn-content1"> 
-                                        <Button variant="contained" className="btn-place1" onClick={()=>this.moveToCart(value.product_id._id)} >
-                                           <span className="btn-move"> Move to cart </span>
-                                        </Button>
-                                    </div>
-                                   
+
                                 </div>
-                                
+
                             </div>
                         )}
                     </div  >

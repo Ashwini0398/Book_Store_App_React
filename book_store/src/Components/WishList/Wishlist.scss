@@ -38,6 +38,7 @@ $border: 1px solid #d9cccc;
     width: 86%;
     display: flex;
     height: 150px;
+    justify-content: space-between;
 }
 .bag-text1 {
     @include flex(flex, space-evenly, column, 687px, 161px, null);
@@ -78,3 +79,44 @@ $border: 1px solid #d9cccc;
     font-size: 7px;
     font-weight: bolder;
 }
+
+@media only screen and (min-width: 360px) {
+   
+    .Delete-add-Button{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .btn-content1{
+        margin-top: 8px;
+    height: 26px;
+    width: 67px;
+    }
+    .cartBag-content1 {
+        width: 94%;
+    }
+    .bag-text1{
+        width: 132px;
+    }
+}
+// @media screen and (width: 410px) {
+   
+//     .Delete-add-Button{
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+//     }
+//     .btn-content1{
+//         margin-top: 8px;
+//     height: 26px;
+//     width: 67px;
+//     }
+//     .cartBag-content1 {
+//         width: 90%;
+//     }
+//     .bag-text1{
+//         width: 132px;
+//     }
+// }

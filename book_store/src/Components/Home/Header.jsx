@@ -89,6 +89,12 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid grey',
         width: '100px',
         cursor: 'pointer'
+    },
+    MuiToolbarRoot: {
+        display: 'flex',
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     }
 }));
 
@@ -137,7 +143,7 @@ export default function Home(props) {
             <>
                 <div className="root">
                     <AppBar className="app-header" position="fixed">
-                        <Toolbar>
+                        <Toolbar className={classes.MuiToolbarRoot}>
                             <Link style={{ textDecoration: "none" }} to={'/Dashboard'} >
                                 <div className="header-title">
                                     <img className="img" src={book} alt="hii" />
