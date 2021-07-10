@@ -28,3 +28,57 @@
     display: flex;
     justify-content: center;
 }
+
+@media only screen and (width: 360px) {
+    .disp-books{
+        margin-left: 34px;
+    }
+}
+
+@media only screen and (width: 411px) {
+    .display-books{
+        width: 1000px;
+        margin-left: 89px;
+    }
+}
+
+@media only screen and (width: 320px) {
+    .display-books{
+        width: 1000px;
+        margin-left: 89px;
+    }
+    .disp-sort{
+        width: 800px;
+    }
+}
+
+@media only screen and (width: 375px) {
+    .display-books{
+        width: 1000px;
+        margin-left: 89px;
+
+}
+    // .disp-sort{
+    //     width: 330px;
+    // }
+}
+@media only screen and (width: 540px) {
+    .display-books{
+        width: 1000px;
+        margin-left: 89px;
+    }
+
+    // .disp-sort{
+    //     width: 1134px;
+    // }
+}
+
+@media only screen and (width: 768px) {
+    .display-books{
+        width: 1000px;
+        margin-left: 89px;
+    }
+    // .disp-sort{
+    //     width: 200%;
+    // }
+}

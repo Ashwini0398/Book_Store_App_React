@@ -35,7 +35,7 @@ class Ordersucess extends Component {
                     
                 <div className="Conatiner-last">
                     <div className="Lastimg">
-                        <img id="Last-image" src={Lastimage} alt="Book" />
+                        <img className="Last-image" src={Lastimage} alt="Book" />
                     </div>
                     <div className="Last-Text">
                         hurray!!!! your order is confirmed

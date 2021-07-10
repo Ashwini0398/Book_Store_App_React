@@ -123,7 +123,7 @@ export default function Dashboard() {
   return (
     <>
       <Header book={books} val={cart.length} search={searchBooks} />
-      <div>
+      <div className ="display-books">
         <div className="disp-sort">
           <div className="disp-title">
             <span className="books-show">Books</span>
@@ -135,7 +135,7 @@ export default function Dashboard() {
                       searchData.length
                     )})Item</span>
           </div>
-          <div>
+          <div >
             <select style={{ width: '157px', height: '47px' }} onChange={(e) => sort(e)} >
               <option selected >Sort by relevance</option>
               <option value="dsec" >Price: high to low</option>
@@ -147,7 +147,7 @@ export default function Dashboard() {
         </div>
         <div className="disp-books">
           { search === "" ? (
-                        currentBooks.map(booksDetails)
+                    currentBooks.map(booksDetails)
 
                     ) : (
                       searchData.map(booksDetails)

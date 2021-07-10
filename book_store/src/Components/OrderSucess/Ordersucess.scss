@@ -28,3 +28,12 @@
          padding: 15px;
      }
 }
+@media only screen and (min-width: 360px) {
+    .Last-image{
+        width: 200px;
+
+    }
+    .table{
+        display: none;
+    }
+}

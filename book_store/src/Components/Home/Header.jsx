@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import Footer from '../Footer/Footer';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import Pagination from '@material-ui/lab/Pagination';
+import PersonIcon from '@material-ui/icons/Person';
 import {
     BrowserRouter,
     Switch,
@@ -83,12 +84,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         flexFlow: 'wrap',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        border: '1px solid grey'
     },
     PopContent: {
-        border: '1px solid grey',
-        width: '100px',
-        cursor: 'pointer'
+      
+        width: '81px',
+        cursor: 'pointer',
+        padding: '5px'
     },
     MuiToolbarRoot: {
         display: 'flex',
@@ -156,16 +159,16 @@ export default function Home(props) {
                                         <SearchIcon />
                                     </div>
                                     <div>
-                                    <InputBase
-                                        className="search2"
-                                        onChange={e => searchBooks(e)}
-                                        placeholder="Search"
-                                        inputProps={{ 'aria-label': 'search' }}
-                                        className="input-search"
-                                        
-                                    />
-                               
-                            </div>
+                                        <InputBase
+                                            className="search2"
+                                            onChange={e => searchBooks(e)}
+                                            placeholder="Search"
+                                            inputProps={{ 'aria-label': 'search' }}
+                                            className="input-search"
+
+                                        />
+
+                                    </div>
 
                                 </div>
 
@@ -177,26 +180,29 @@ export default function Home(props) {
                                     <Popper className={classes.pop} open={open} anchorEl={anchorEl} placement={'bottom-start'} transition>
                                         <div className={classes.paper}>
                                             <div className={classes.PopContent} onClick={() => setRedirect("/WishList")}>
-                                                WishList
+                                                &#x2764; WishList
                                             </div>
+                                            <div className="logout">
+                                            <div><PersonIcon /></div>
                                             <div className={classes.PopContent} onClick={() => setRedirect("/")}>
                                                 Logout
                                             </div>
                                         </div>
+                                        </div>
                                     </Popper>
-                                </div>
-                                <div className="cart" >
+                            </div>
+                            <div className="cart" >
 
-                                    <Badge badgeContent={props.val} color="primary" onClick={() => redirectTo()}>
-                                        <ShoppingCartIcon />
-                                    </Badge>
+                                <Badge badgeContent={props.val} color="primary" onClick={() => redirectTo()}>
+                                    <ShoppingCartIcon />
+                                </Badge>
 
-                                    <span>Cart</span>
-                                </div>
+                                <span className="cart">Cart</span>
+                            </div>
                             </div>
                         </Toolbar>
                     </AppBar>
-                </div>
+            </div>
             </>
         );
     }

@@ -5,8 +5,9 @@
     justify-content: $justify;
     height: $height;
     width: $width;
+  
 }
-
+$margin-left: 162px;
 $border: 1px solid #d9cccc;
 .CartBag-frame {
     @include flex(flex,center ,column ,null ,100% ,100px );
@@ -142,25 +143,36 @@ $border: 1px solid #d9cccc;
 
 // }
 @media screen and (max-width: 500px) {
-    .cartBag-content {
-        width: 97%;
-        margin-left: 93px;
-    }
-    .address-frame {
-        width: 100%;
-        margin-left: 87px;
-       
-    }
-    .order-frame {
-        width: 93%;
-        margin-left: 82px;
+    $width: 616px;
+    $marginleft: 641px;
+
+    .cartBag-content{
+        margin-left:$marginleft;
+        width:$width;
     }
     .address-frame-details{
-        width: 93%;
-    margin-left: 91px;
+        height: 856px;
+        margin-left: $marginleft;
+        width:$width;
     }
-    .order-content{width: 94%;
-    margin-left: 88px;}
+    .address-frame{
+        margin-left:$marginleft;
+        width:$width;
+    }
+    .order-frame{
+        margin-left:$marginleft;
+        width:$width;
+    }
+    .order-content{
+        margin-left: $marginleft;
+        width:$width;
+    }
+    .custm-content-names{
+        height: 106px;
+    }
+    .city-state{
+        height: 106px;
+    }
 }
 @media screen and (max-width: 600px) {
     .custm-content-names {
@@ -188,13 +200,27 @@ $border: 1px solid #d9cccc;
     .title {
         width: 94%;
     }
+    .cartBag-content{
+        margin-left: $margin-left;
+    }
     .address-frame-details{
         height: 856px;
+        margin-left: $margin-left;
+    }
+    .address-frame{
+        margin-left: $margin-left;
+    }
+    .order-frame{
+        margin-left: $margin-left;
+    }
+    .order-content{
+        margin-left: $margin-left;
     }
     .custm-content-names{
-        height: 87px;
+        height: 106px;
     }
     .city-state{
-        height: 87px;
+        height: 106px;
     }
 }
+

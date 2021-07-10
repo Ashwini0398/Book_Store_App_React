@@ -5,18 +5,29 @@
     justify-content: flex-start;
     padding: 21px;
     color: white;
-    width: 214%;
+    width: 1000px;
     padding-left: 94px;
     // width: 900px;
 }
 
-@media only  screen and (max-width: 360px) {
+@media only  screen and (width: 360px) {
     .footer-area{
         width: 78%;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (width: 411px) {
     .footer-area {
+        width: 850px;
        font-size: 11px;
     }
+
 }
+@media screen and (width: 320px) {
+    .footer-area {
+        padding-left: 62px;
+    font-size: 9px;
+    }
+
+}
+
+

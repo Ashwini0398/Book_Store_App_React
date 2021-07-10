@@ -15,7 +15,7 @@
     margin-left: 127px;
 }
 .search-bar{
-    width: 49%;
+    width: 53%;
 }
 .input-search{
     width: 400px; 
@@ -40,6 +40,9 @@
 }
 .profile-icon{
     @include icon(flex,null,center)
+}
+.logout{
+ @include icon(flex,row , center)   
 }
 .cart{
     @include icon(flex,column,null);
@@ -91,6 +94,9 @@
 
 }
 @media only screen and (width: 411px) {
+    .header-title{
+        margin-left: 0px;
+    }
     // .profile-text{
     //     display: none;
     // }
@@ -128,6 +134,38 @@
     .header-title{
         width: 114px;
         margin-left: 5px;
+    }
+    .text{
+        font-size: 18px;
+        margin-right: 12px;
+    }
+    img{
+        width: 17px;
+    }
+    .footer-content{
+        width: 500px;
+    position: absolute;
+
+    }
+    .input-search{
+        width: 100px;
+    }
+    .profile-text{
+        font-size: 9px;
+    }
+    .cart{
+        font-size: 9px;    }
+
+}
+@media only screen and (width: 375px) {
+    // .profile-text{
+    //     display: none;
+    // }
+    .search-bar{
+        width: 38%;
+    }
+    .header-title{
+        margin-left: 0px;
     }
     .text{
         font-size: 18px;
