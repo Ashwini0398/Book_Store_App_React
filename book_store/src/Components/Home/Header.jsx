@@ -14,7 +14,7 @@ import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
 import Popper from '@material-ui/core/Popper';
 import { useEffect } from 'react';
-import Footer from '../Footer/Footer';
+import Footer from '../../Pages/Footer/Footer';
 import Dashboard from '../../Pages/Dashboard/Dashboard';
 import Pagination from '@material-ui/lab/Pagination';
 import PersonIcon from '@material-ui/icons/Person';

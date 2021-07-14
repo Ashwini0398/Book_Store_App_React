@@ -8,10 +8,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Fade from '@material-ui/core/Fade';
 import Image from '../../Assets/Image.png';
 import user_services from "../../Services/user_services";
+import Popper from '@material-ui/core/Popper';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import '../Card/Card.scss'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,10 +113,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     flexFlow: 'wrap',
-    backgroundColor: 'white'
+    backgroundColor: 'yellow',
+    width: '200px',
+    height: '300px',
+    padding: theme.spacing(1),
+    position: 'relative'
   },
   pop: {
-    zIndex: "10000"
+    zIndex: "10000",
+    pointerEvents: 'none',
+    position: 'absolute'
   },
   descriptionFrame: {
     position: 'relative',
@@ -122,13 +130,27 @@ const useStyles = makeStyles((theme) => ({
     width: '300px',
     height: '300px',
     border: '1px solid gray',
-    background: 'aliceblue'
+    background: 'aliceblue',
+    // boxS
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: 'black',
   },
-  
+  // paper:{
+  //   backgroundColor:'white',
+  //   width:'200px',
+  //   height:'300px',
+  //   padding: theme.spacing(1),
+  //   position:'relative'
+  // }, 
+  popover: {
+    pointerEvents: 'none',
+  },
+  typography: {
+    padding: theme.spacing(2),
+  },
+
 }));
 
 export default function SimpleCard(props) {
@@ -140,17 +162,17 @@ export default function SimpleCard(props) {
   const [abcd, abcdSet] = React.useState(false);
   const [openButton, setOpenButton] = React.useState(true);
   const [state, setState] = React.useState(false);
-  
+
   const ButtonClick = () => {
     setDisplayCart(true);
     setOpenButton(true);
   }
 
- 
+
 
   const addToCart = (value) => {
 
-      setState(true);
+    setState(true);
     let Data = {
       isCart: true
     }
@@ -170,7 +192,7 @@ export default function SimpleCard(props) {
   const handleClose = () => {
     setState(false);
   };
- 
+
   const wishListToCart = (value, Transition) => {
 
     setState(true);
@@ -181,21 +203,24 @@ export default function SimpleCard(props) {
       console.log("wishlist ", data);
       props.getCard();
       setOpenButton(false)
-      
+
     }).catch(error => {
       console.log("error", error);
     })
   }
 
- 
+  const openPopper = Boolean(anchorEl);
 
-  const descriptionshow = (e) => {
-    e.stopPropagation();
-    setOpen(true);
+
+
+  const descriptionshow = () => {
+     setOpen(true);
+    setAnchorEl(anchorEl ? null : !open);
   }
-  const descriptionhide = (e) => {
-    e.stopPropagation();
-    setOpen(false);
+  const descriptionhide = () => {
+     setOpen(false);
+    setAnchorEl(anchorEl ? null : !open);
+
   }
 
 
@@ -204,14 +229,18 @@ export default function SimpleCard(props) {
 
   return (
     <>
+    <div className="disp">
       <Card className={classes.root} >
         <div className={classes.outOfStock}
           style={{ display: props.value.quantity <= 1 ? 'flex' : 'none' }}
           onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>Out Of Stock</div>
-        <CardContent className={classes.content} onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>
-          <div style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div>
-          {/* <div >{props.value.description}</div> */}
-          <img style={{ display: open ? 'none' : 'block' }} className={classes.image} src={Image} alt="" />
+        {/* <CardContent className={classes.content} onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>
+          <div style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div> */}
+        <CardContent className={classes.content}>
+          <div>
+          <img className={classes.image} src={Image} alt="" onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)} /></div>
+          {/* onMouseLeave={() => descriptionhide() */}
+         
         </CardContent>
         <CardActions className={classes.cardTxt}>
           <div className={classes.bookTitle}>{props.value.bookName}</div>
@@ -232,29 +261,29 @@ export default function SimpleCard(props) {
                 </>
                 :
                 <>
-                  <Button 
+                  <Button
                     onClick={ButtonClick}
-                    variant="contained" 
-                    id={props.value._id} 
-                    className={classes.btn1Card} 
+                    variant="contained"
+                    id={props.value._id}
+                    className={classes.btn1Card}
                     style={{ display: props.value.quantity > 1 ? 'block' : 'none' }}
                     onClick={() => { addToCart(props.value) }} >
                     ADD TO BAG
                   </Button>
-                  <Button 
-                    variant="contained" 
-                    id={props.value._id} 
-                    className={classes.btn1Card} 
+                  <Button
+                    variant="contained"
+                    id={props.value._id}
+                    className={classes.btn1Card}
                     style={{ display: props.value.quantity <= 1 ? 'block' : 'none' }}
                     disabled>
                     ADD TO BAG
                   </Button>
-                 
 
-                  <Button variant="contained" className={classes.btn2Card} onClick={ButtonClick,() => {wishListToCart(props.value)}}>
+
+                  <Button variant="contained" className={classes.btn2Card} onClick={ButtonClick, () => { wishListToCart(props.value) }}>
                     &#10084; WISHLIST
                   </Button>
-                
+
                 </>
 
               }
@@ -269,10 +298,29 @@ export default function SimpleCard(props) {
         </div>
 
       </Card>
+
+      <div className="Description" style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div>
+      </div>
       
+      {/* <Popper  open={openPopper} anchorEl={anchorEl}
+      disablePortal= "true"
+           placement="right" 
+          // placement='bottom-end'
+          // modifiers={{
+          //   offset: {
+          //   enabled: true,
+          //   offset: '0, 30'
+          //  }
+          // }}
+            // onClose={descriptionhide}
+            // disableRestoreFocus
+          >
+            <div className={classes.paper}>{props.value.description}</div>
+          </Popper>
+
       {/* <div className={classes.descriptionFrame}>
       {props.value.description}
-      </div> */}
+      </div> */} 
     </>
   );
 }

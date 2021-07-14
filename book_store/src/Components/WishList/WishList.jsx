@@ -6,7 +6,7 @@ import InputBase from '@material-ui/core/InputBase';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import { Redirect } from "react-router-dom";
 import Header from '../../Components/Home/Header';
-import Footer from '../../Components/Footer/Footer';
+import Footer from '../../Pages/Footer/Footer';
 import Button from '@material-ui/core/Button';
 import Image from '../../Assets/Image.png';
 import user_services from "../../Services/user_services";
@@ -133,7 +133,7 @@ export default class WishList extends Component {
                         )}
                     </div  >
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         )
     }

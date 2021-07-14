@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../../Components/Home/Header';
-import Footer from '../../Components/Footer/Footer';
+import Footer from '../Footer/Footer';
 import Card from "../../Components/Card/Card";
 import user_services from "../../Services/user_services";
 import { useEffect } from 'react';
@@ -153,6 +153,8 @@ export default function Dashboard() {
                       searchData.map(booksDetails)
                     )}
         </div>
+       
+
         <div className="paginationBlock">
           <Paginations
             count={Math.floor(books.length / perPage + 1)}

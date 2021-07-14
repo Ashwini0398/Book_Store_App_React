@@ -142,7 +142,7 @@ $border: 1px solid #d9cccc;
 // .continue{
 
 // }
-@media screen and (max-width: 500px) {
+@media screen and (width: 500px) {
     $width: 616px;
     $marginleft: 641px;
 
@@ -174,7 +174,7 @@ $border: 1px solid #d9cccc;
         height: 106px;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (width: 600px) {
     .custm-content-names {
         flex-direction: column;
     }
@@ -185,7 +185,7 @@ $border: 1px solid #d9cccc;
         flex-direction: column;
     }
 }
-@media screen and (max-width: 360px) {
+@media screen and (width: 360px) {
     .address-feild {
         width: 212px;
     }

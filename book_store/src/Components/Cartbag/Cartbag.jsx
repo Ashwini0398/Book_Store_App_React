@@ -4,7 +4,7 @@ import Headers from '../../Components/Home/Header';
 import './Cartbag.scss';
 
 import Button from '@material-ui/core/Button';
-import Footer from '../Footer/Footer';
+import Footer from '../../Pages/Footer/Footer';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';

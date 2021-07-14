@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Home/Header';
-import Footer from '../Footer/Footer';
+import Footer from '../../Pages/Footer/Footer';
 import Lastimage from '../../Assets/last.png';
 import Button from '@material-ui/core/Button';
 import { Redirect } from "react-router-dom";
