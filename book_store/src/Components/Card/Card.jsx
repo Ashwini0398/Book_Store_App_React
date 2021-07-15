@@ -108,17 +108,29 @@ const useStyles = makeStyles((theme) => ({
     top: '100px'
   },
   paper: {
-    borderRadius: '3px',
-    maxWidth: '146px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexFlow: 'wrap',
-    backgroundColor: 'yellow',
-    width: '200px',
-    height: '300px',
     padding: theme.spacing(1),
-    position: 'relative'
-  },
+    paddingBottom: "0px",
+    textAlign: 'left',
+    border: "1px solid #e0e0e0",
+    boxShadow: "none",
+    borderRadius: "8px",
+    width: "235px",
+    height: "275px",
+    padding: "0",
+    color: theme.palette.text.secondary,
+},
+  // paper: {
+  //   borderRadius: '3px',
+  //   maxWidth: '146px',
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   flexFlow: 'wrap',
+  //   backgroundColor: 'yellow',
+  //   width: '200px',
+  //   height: '300px',
+  //   padding: theme.spacing(1),
+  //   position: 'relative'
+  // },
   pop: {
     zIndex: "10000",
     pointerEvents: 'none',
@@ -155,13 +167,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleCard(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [addCart, setAdd] = React.useState([]);
   const [displayCart, setDisplayCart,] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [abcd, abcdSet] = React.useState(false);
   const [openButton, setOpenButton] = React.useState(true);
   const [state, setState] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+      setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const openpop = Boolean(anchorEl);
+  const id = openpop ? 'transitions-popper' : undefined;
+
 
   const ButtonClick = () => {
     setDisplayCart(true);
@@ -213,15 +234,15 @@ export default function SimpleCard(props) {
 
 
 
-  const descriptionshow = () => {
-     setOpen(true);
-    setAnchorEl(anchorEl ? null : !open);
-  }
-  const descriptionhide = () => {
-     setOpen(false);
-    setAnchorEl(anchorEl ? null : !open);
+  // const descriptionshow = () => {
+  //    setOpen(true);
+  //   setAnchorEl(anchorEl ? null : !open);
+  // }
+  // const descriptionhide = () => {
+  //    setOpen(false);
+  //   setAnchorEl(anchorEl ? null : !open);
 
-  }
+  // }
 
 
 
@@ -230,16 +251,15 @@ export default function SimpleCard(props) {
   return (
     <>
     <div className="disp">
-      <Card className={classes.root} >
+      <Card className={classes.root} aria-describedby={id} onClick={handleClick}>
         <div className={classes.outOfStock}
-          style={{ display: props.value.quantity <= 1 ? 'flex' : 'none' }}
-          onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>Out Of Stock</div>
+          style={{ display: props.value.quantity <= 1 ? 'flex' : 'none' }} >Out Of Stock</div>
         {/* <CardContent className={classes.content} onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)}>
           <div style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div> */}
         <CardContent className={classes.content}>
           <div>
-          <img className={classes.image} src={Image} alt="" onMouseOver={(e) => descriptionshow(e)} onMouseLeave={(e) => descriptionhide(e)} /></div>
-          {/* onMouseLeave={() => descriptionhide() */}
+          <img className={classes.image} src={Image} alt=""  /></div>
+          
          
         </CardContent>
         <CardActions className={classes.cardTxt}>
@@ -298,29 +318,17 @@ export default function SimpleCard(props) {
         </div>
 
       </Card>
+      <Popper id={id} open={openpop} placement="right-start"  anchorEl={anchorEl} disablePortal={false} transition style={{"background": "white","padding": "5px"}}>
+                                {({ TransitionProps }) => (
+                                    <Fade {...TransitionProps} timeout={350}>
+                                        <div className={classes.paper}>{props.value.description }<br></br>The content of the Popper.The findDOMNode error looks like it's happening inside a library, it's not in your code. That is not a relevant warning for your issue I don't think. Which part of the code that you wrote is not working as expected?</div>
+                                    </Fade>
+                                )}
+     </Popper>
 
-      <div className="Description" style={{ display: open ? 'block' : 'none' }}>{props.value.description}</div>
-      </div>
+  </div>
       
-      {/* <Popper  open={openPopper} anchorEl={anchorEl}
-      disablePortal= "true"
-           placement="right" 
-          // placement='bottom-end'
-          // modifiers={{
-          //   offset: {
-          //   enabled: true,
-          //   offset: '0, 30'
-          //  }
-          // }}
-            // onClose={descriptionhide}
-            // disableRestoreFocus
-          >
-            <div className={classes.paper}>{props.value.description}</div>
-          </Popper>
-
-      {/* <div className={classes.descriptionFrame}>
-      {props.value.description}
-      </div> */} 
+     
     </>
   );
 }
